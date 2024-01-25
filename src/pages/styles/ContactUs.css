@@ -1,0 +1,114 @@
+body {
+    height: 100%;
+}
+
+.main-div-contact{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 100px;
+    height: 100vh;
+    margin: 10px;
+}
+
+.mainContact h6{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: left;
+    margin-top: 0;
+}
+
+.icon-with-text {
+    display: flex;
+    gap: 10px;
+}
+
+.text{
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.header-text{
+    font-size: 14px;
+    text-align: justify;
+    max-width: 500px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.image-form{
+    flex: 1;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.image-form img{
+    height: 80vh;
+    width: 50vw;
+}
+
+.talk-text{
+    display: block;
+    margin-top: 5em;
+    text-decoration: underline;
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-container {
+    background-color: rgba(211, 196, 173, 0.5);
+    width: 100vh;
+    height: 80vh;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    /* margin-bottom: 8px; */
+}
+
+input,
+textarea {
+    display: block;
+    width: 70vh;
+    padding: 0.5rem 0.8rem 0.5rem 0.8rem;
+    margin: 0.9vw 0;
+    border: 0;
+    border-radius: 5px;
+    color: #706D6E;
+    border: 1px solid rgba(65, 64, 66, 0.2);
+    background-color: rgba(211, 196, 173, 0);
+    font-size: 12px;
+}
+
+textarea {
+    height: 15vh;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 50vh;
+}
+
+.button-class{
+  background-color: #A56D47;  
+  color: white;
+}
+
+.close-icon{
+    /* position: absolute; */
+    padding: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 12px;
+}

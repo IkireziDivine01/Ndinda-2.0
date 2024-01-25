@@ -1,0 +1,47 @@
+
+*{
+    font-family: 'TheSans ExtraLight', sans-serif;
+}
+.image-scrolling-page {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    grid-auto-rows: minmax(100px, auto);
+    height: 100vh;
+}
+
+.image-container {
+    grid-column: 1 ;
+    grid-row: 1;
+    width: 50vw;
+    column-gap: 50px;
+}
+
+img {
+    /* margin: 2em; */
+    width: 50vw;
+    height: 100vh;
+    object-fit: cover;
+    scroll-snap-align: start;
+}
+
+.text-container {
+    grid-column: 2;
+    grid-row: 1;
+    width: 50vw;
+    padding: 20px;
+    box-sizing: border-box;
+    justify-content: left;
+}
+
+.text-container p{
+    float: right;
+}
+
+.image-scroll{
+    flex: 4;
+}
+
+.image-scroll::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,97 @@
+.grid>*:active~* {
+    filter: grayscale(100%);
+    /* Apply grayscale filter to make items white */
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 2em;
+  row-gap: 4em;
+}
+
+.cards .red .blue .green {
+  background-color: #fff;
+}
+
+.cards .card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.cards .card p.tip {
+  font-size: 1em;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px;
+}
+
+.cards .card p.second-text {
+  font-size: .7em;
+  text-align: justify;
+  padding: 10px;
+  visibility: hidden;
+}
+
+.cards .card:hover {
+  transform: scale(1.1, 1.1);
+  height: 10em;
+}
+
+.cards .card:hover p.second-text {
+  visibility: visible;
+}
+
+.cards:hover > .card:not(:hover) {
+  filter: blur(10px);
+  transform: scale(0.9, 0.9);
+}
+
+.cards .card .button-13 {
+  background-color: #fff;
+  border: 1px solid #A56D47;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #A56D47;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember", sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  margin-left: 10px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+  visibility: hidden;
+}
+
+
+
+.button-13:hover {
+  background-color: #A56D47;
+  color: #fff;
+}
+
+
+
+.button-13:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
+}
+
+.cards .card:hover .button-13{
+  visibility: visible;
+}
