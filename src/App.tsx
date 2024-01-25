@@ -7,6 +7,7 @@ import AboutUs from './pages/Aboutus';
 import ProjectInfo from './pages/ProjectInfo';
 import Construction from './pages/Construction';
 import Design from './pages/Design';
+import Hub from './pages/Hub';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/construction" element={<Construction />} />
         <Route path="/design" element={<Design />} />
+        <Route path="/hub" element={<Hub />} />
       </Routes>
     </Router>
   )

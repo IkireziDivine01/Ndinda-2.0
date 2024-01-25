@@ -34,9 +34,9 @@ const Design = () => {
             <ul className="flex gap-10">
               <li><a href="/design" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main">Design</a></li>
               <li><a href="/construction" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main">Construction</a></li>
-              <li><a href="/contactUs" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main">Hub</a></li>
+              <li><a href="/hub" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main">Hub</a></li>
               <li><a href="/contactUs" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main">Premium</a></li>
-              <li><a href="/contactUs" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
+              <li><a href="/aboutUs" className="text-main-dark uppercase hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
             </ul>
           )}
         </nav>
