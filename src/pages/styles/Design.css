@@ -1,15 +1,54 @@
 .grid>*:active~* {
     filter: grayscale(100%);
-    /* Apply grayscale filter to make items white */
 }
 
 .cards {
   display: grid;
-  grid-template-columns: auto auto auto;
-  column-gap: 2em;
-  row-gap: 4em;
+  grid-template-columns: auto auto auto auto auto auto;
 }
 
+.cards .card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.cards .card.clicked {
+  transform: scale(1.1, 1.1);
+  height: auto;
+  /* Change height to auto for clicked card */
+}
+
+.cards .card:not(.clicked) {
+  filter: blur(0);
+  /* Apply blur only to cards that are not clicked */
+}
+
+.cards .card p.tip {
+  font-size: 1em;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px;
+}
+
+.cards .card p.second-text {
+  font-size: .7em;
+  text-align: justify;
+  padding: 10px;
+  visibility: hidden;
+}
+
+.cards .card.clicked p.second-text {
+  visibility: visible;
+}
+
+.cards .card.clicked .button-13 {
+  visibility: visible;
+}
+/*
 .cards .red .blue .green {
   background-color: #fff;
 }
@@ -37,21 +76,21 @@
   visibility: hidden;
 }
 
-.cards .card:hover {
+.cards .card.clicked {
   transform: scale(1.1, 1.1);
   height: 10em;
 }
 
-.cards .card:hover p.second-text {
+.cards .card.clicked p.second-text {
   visibility: visible;
 }
 
-.cards:hover > .card:not(:hover) {
+.cards .card:not(.clicked) {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
 }
 
-.cards .card .button-13 {
+.cards .card.clicked .button-13 {
   background-color: #fff;
   border: 1px solid #A56D47;
   border-radius: 8px;
@@ -75,7 +114,7 @@
   vertical-align: middle;
   width: 100px;
   visibility: hidden;
-}
+} */
 
 
 
@@ -92,6 +131,6 @@
   outline: 0;
 }
 
-.cards .card:hover .button-13{
+/* .cards .card:hover .button-13{
   visibility: visible;
-}
+} */
