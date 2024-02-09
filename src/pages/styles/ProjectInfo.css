@@ -34,9 +34,9 @@ img {
     justify-content: left;
 }
 
-.text-container p{
+/* .text-container p{
     float: right;
-}
+} */
 
 .image-scroll{
     flex: 4;
