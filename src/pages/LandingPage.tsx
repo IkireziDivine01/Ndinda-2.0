@@ -34,7 +34,7 @@ const LandingPage = () => {
     <>
       <div className="landing">
         <div>
-          <img src={landingGif} alt="gif" className='gif' />
+          {/* <img src={landingGif} alt="gif" className='gif' /> */}
         </div>
         <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
           <Header />

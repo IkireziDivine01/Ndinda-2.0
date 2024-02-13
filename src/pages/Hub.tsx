@@ -80,7 +80,7 @@ const Hub = () => {
         </div>
       </div> 
 
-      <video
+      {/* <video
         ref={videoRef}
         className="w-full h-2/3"
         loop
@@ -93,7 +93,7 @@ const Hub = () => {
       >
         <source src={vid} type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
 
       <div
         style={{
