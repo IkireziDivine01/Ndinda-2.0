@@ -12,7 +12,9 @@
   "dependencies": {
     "@mantine/hooks": "^7.4.0",
     "alpinejs": "^3.13.3",
+    "axios": "^1.6.7",
     "classnames": "^2.5.0",
+    "cors": "^2.8.5",
     "gsap": "^3.12.4",
     "imagesloaded": "^5.0.0",
     "node-sass": "^9.0.0",

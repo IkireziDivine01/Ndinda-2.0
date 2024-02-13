@@ -81,13 +81,14 @@ const Design = () => {
                         onClick={() => handleSeeMoreClick(index)}
                         onDoubleClick={() => handleDoubleClick(index)}
                     >
-                        <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center" />
+                        <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center " />
                         <p className="tip">Jeff House</p>
                         {showDetails[index] && (
-                            <>
-                                <p className="second-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida, leo vitae aliquam feugiat, lorem mi suscipit velit, id posuere mi augue dapibus magna. Duis imperdiet sem ut convallis ultricies. Ut tempus non eros non venenatis. Vestibulum elit ligula, ultricies vel massa eget, aliquet ornare orci.</p>
+                            <div className='absolute top-20 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>
+                              {/* <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center " /> */}
+                                <p className="second-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida, leo vitae aliquam feugiat, lorem mi suscipit velit, id posuere mi augue dapibus magna.</p>
                                 <Link to="/projectInfo" className="button-13" role="button">See more</Link>
-                            </>
+                            </div>
                         )}
                     </div>
                 ))}
