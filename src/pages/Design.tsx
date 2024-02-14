@@ -82,7 +82,7 @@ const Design = () => {
       </div>
     </div>
             </div>  
-            <div className='w-12/12 absolute top-20 left-1/4 pt-4'>
+            <div className='w-12/12 absolute top-16 left-1/3 pt-10'>
                 <ul className='flex gap-10'>
                     <li><a className="text-main-dark font-bold capitalize hover:text-main hover:font-bold active:text-main">All</a></li>
                     <li><a className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">Residential</a></li>
@@ -94,7 +94,7 @@ const Design = () => {
             </div>
             
         {projects && ( // Add null check for projects 
-         <div className="cards w-full pt-8 pr-8 mt-32 gap-4">
+         <div className="absolute top-1/4 left-0 cards w-full gap-4">
                 {[...Array(12)].map((_, index) => (
                     <div
                         key={index}
@@ -102,7 +102,7 @@ const Design = () => {
                         onClick={() => handleSeeMoreClick(index)}
                         onDoubleClick={() => handleDoubleClick(index)}
                     >
-                        <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center " />
+                        <img src={image1} alt={`image${index}`} className="w-full h-48 object-cover object-center " />
                         <p className="tip">{projects[0].title}</p>
                         {showDetails[index] && (
                             <div className='absolute top-20 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>

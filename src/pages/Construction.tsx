@@ -4,6 +4,7 @@ import { FaRegCopyright } from "react-icons/fa6";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import {useRef ,useState, useEffect } from 'react';
 import { getAllPages } from '../services';
+import about from '../assets/about.mp4'
 
 const Construction = () => {
   const [construction, setConstruction] = useState();
@@ -57,7 +58,7 @@ const Construction = () => {
   return (
     <div>
       {construction && ( // Add null check for construction
-        <div>
+        <div className='absolute top-0 left-0 w-full'>
     <video
         ref={videoRef}
         className="w-full h-2/3"
@@ -69,7 +70,7 @@ const Construction = () => {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
-        <source src={construction.media} type="video/mp4" />
+        <source src={about} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
@@ -77,11 +78,11 @@ const Construction = () => {
       </div>
       <div
         style={{
-          position: 'absolute',
-          bottom: 0,
+          position: 'fixed',
+          bottom: 10,
           right: 4,
-          width: '10%',
-          height: '10%',
+          width: '8%',
+          height: '5%',
           backgroundColor: '#A56D47',
           display: 'flex',
           justifyContent: 'center',
@@ -90,7 +91,7 @@ const Construction = () => {
         }}
       >
         <div>
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col">
             <li className="flex gap-1 items-center text-main-light">
               <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
                 <IoChatbubbleOutline style={{color: 'white'}}/>
@@ -110,14 +111,16 @@ const Construction = () => {
               Your browser does not support the video tag.
             </video>
           </div> */}
-        </div>
-      )}
-      <div  className="flex justify-center items-center w-full">
+
+          <div  className="flex justify-center items-center w-full">
         <p className="flex items-center gap-2 text-xs">
           <FaRegCopyright />
           <span>2024 Ndinda Design studio. All rights reserved</span>
         </p>
       </div>
+
+        </div>
+      )}
     </div>
   );
 }
