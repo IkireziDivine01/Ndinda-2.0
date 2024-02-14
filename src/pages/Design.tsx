@@ -94,7 +94,7 @@ const Design = () => {
             </div>
             
         {projects && ( // Add null check for projects 
-         <div className="absolute top-1/4 left-0 cards w-full gap-4">
+         <div className="absolute top-1/4 left-0 cards w-full gap-4 pr-4 pl-4">
                 {[...Array(12)].map((_, index) => (
                     <div
                         key={index}

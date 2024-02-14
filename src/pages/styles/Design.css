@@ -21,8 +21,8 @@
   height: auto;
 }
 
-.cards .card.clicked .card:not(.clicked) {
-  filter: blur(5px); 
+.cards .card.clicked~.card {
+  filter: blur(2px);
 }
 
 /* .cards .card.show-details {
