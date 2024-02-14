@@ -16,4 +16,19 @@ export const getAllConfigs = async () => {
     return res.data;
 };
 
+export const getAllPages = async () => {
+    const res = await ndinda_instance.get(`/api/pages`);
+    return res.data;
+};
+
+export const getAllProjects = async () => {
+  const res = await ndinda_instance.get(`/api/projects`);
+  return res.data;
+};
+
+export const getAllProjectsById = async (id:string) =>{
+  const res = await ndinda_instance.get(`/api/projects/${id}`);
+  return res.data;
+};
+
 export default ndinda_instance

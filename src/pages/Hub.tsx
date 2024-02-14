@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import logo from "../assets/Ndinda logo.png";
 import { FaBars, FaTimes, FaChevronUp } from 'react-icons/fa';
 import vid from '../assets/vid.mov';
@@ -7,11 +7,31 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
+import { getAllPages } from "../services";
 
 const Hub = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
   const [isCohortDropdownOpen, setCohortDropdownOpen] = useState(false);
+  const [hub, setHub] = useState();
+
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllPages();
+        console.log("Data fetched:", data); // Logging the fetched data
+        console.log("Data type:", typeof data); // Logging the type of data received
+        if (data && data.length > 0) {
+          setHub(data[1]); // Fetching the first element of the array
+          console.log("Hub set:", data[1]); // Logging the construction set
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -80,7 +100,7 @@ const Hub = () => {
         </div>
       </div> 
 
-      {/* <video
+      <video
         ref={videoRef}
         className="w-full h-2/3"
         loop
@@ -93,7 +113,7 @@ const Hub = () => {
       >
         <source src={vid} type="video/mp4" />
         Your browser does not support the video tag.
-      </video> */}
+      </video>
 
       <div
         style={{

@@ -1,16 +1,37 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import logo from "../assets/Ndinda logo.png";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import image1 from '../assets/image1.png';
 import './styles/Design.css';
 import ProjectInfo from './ProjectInfo';
 import { Link } from 'react-router-dom';
+import { getAllProjects } from '../services';
 
 const Design = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
     const [showDetails, setShowDetails] = useState(Array(12).fill(false)); // Array to track details for each card
     const [clickedCard, setClickedCard] = useState(null);
+    const [projects, setProjects] = useState();
+
+    useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllProjects();
+        console.log("Data fetched:", data); // Logging the fetched data
+        console.log("Data type:", typeof data); // Logging the type of data received
+        setProjects(data); // Fetching the first element of the array
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log('====================================');
+  console.log('Projects:', projects);
+  console.log('====================================');
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -71,9 +92,9 @@ const Design = () => {
                     <li><a className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">Health</a></li>
                 </ul>
             </div>
-
             
-            <div className="cards w-full pt-8 pr-8 mt-32 gap-4">
+        {projects && ( // Add null check for projects 
+         <div className="cards w-full pt-8 pr-8 mt-32 gap-4">
                 {[...Array(12)].map((_, index) => (
                     <div
                         key={index}
@@ -82,17 +103,18 @@ const Design = () => {
                         onDoubleClick={() => handleDoubleClick(index)}
                     >
                         <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center " />
-                        <p className="tip">Jeff House</p>
+                        <p className="tip">{projects[0].title}</p>
                         {showDetails[index] && (
                             <div className='absolute top-20 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>
                               {/* <img src={image1} alt={`image${index}`} className="w-48 h-48 object-cover object-center " /> */}
-                                <p className="second-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida, leo vitae aliquam feugiat, lorem mi suscipit velit, id posuere mi augue dapibus magna.</p>
+                                <p className="second-text">{projects[0].description}</p>
                                 <Link to="/projectInfo" className="button-13" role="button">See more</Link>
                             </div>
                         )}
                     </div>
                 ))}
             </div>
+        )}
           
         </>
     )

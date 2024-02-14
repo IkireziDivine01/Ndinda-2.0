@@ -70,12 +70,12 @@ const Aboutus = () => {
     </div>
             </div> 
 
-         {/* <video
+         <video
         ref={videoRef}
         className="w-full h-2/3"
         loop
         autoPlay
-        playsInline
+        playsInline 
         muted
         onClick={handleUserInteraction}
         onMouseOver={handleMouseOver}
@@ -83,7 +83,7 @@ const Aboutus = () => {
       >
         <source src={about} type="video/mp4" />
         Your browser does not support the video tag.
-      </video> */}
+      </video>
   </>
     )
 };

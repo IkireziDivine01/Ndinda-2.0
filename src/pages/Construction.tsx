@@ -1,16 +1,81 @@
-import video from '../assets/video2.png'
-import Header from '../components/header'
+import video from '../assets/video2.png';
+import Header from '../components/header';
 import { FaRegCopyright } from "react-icons/fa6";
 import { IoChatbubbleOutline } from "react-icons/io5";
+import {useRef ,useState, useEffect } from 'react';
+import { getAllPages } from '../services';
 
 const Construction = () => {
-    return (
+  const [construction, setConstruction] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllPages();
+        console.log("Data fetched:", data); // Logging the fetched data
+        console.log("Data type:", typeof data); // Logging the type of data received
+        if (data && data.length > 0) {
+          setConstruction(data[0]); // Fetching the first element of the array
+          console.log("Construction set:", data[0]); // Logging the construction set
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log('Construction:', construction);
+  const videoRef = useRef();
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
+  const handleUserInteraction = () => {
+    const video = videoRef.current;
+
+    if (!hasUserInteracted) {
+      video.play().then(() => {
+        setHasUserInteracted(true);
+      });
+    }
+  };
+
+  const handleMouseOver = () => {
+    const video = videoRef.current;
+    if (hasUserInteracted && video.paused) {
+      video.play();
+    }
+  };
+
+  const handleMouseOut = () => {
+    const video = videoRef.current;
+    if (hasUserInteracted && !video.paused) {
+      video.pause();
+    }
+  };
+  
+  return (
+    <div>
+      {construction && ( // Add null check for construction
         <div>
-          <img src={video} alt="video" className='w-full h-1/2' />
-             <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
-              <Header/>
-          </div>
-          <div
+    <video
+        ref={videoRef}
+        className="w-full h-2/3"
+        loop
+        autoPlay
+        playsInline
+        muted
+        onClick={handleUserInteraction}
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+      >
+        <source src={construction.media} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+        <Header/>
+      </div>
+      <div
         style={{
           position: 'absolute',
           bottom: 0,
@@ -26,7 +91,7 @@ const Construction = () => {
       >
         <div>
           <ul className="flex flex-col gap-4">
-            <li className="flex gap-1 items-center text-main-light"> {/* Changed to flex-col and added items-center */}
+            <li className="flex gap-1 items-center text-main-light">
               <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
                 <IoChatbubbleOutline style={{color: 'white'}}/>
               </a>
@@ -35,24 +100,26 @@ const Construction = () => {
           </ul>
         </div>
       </div>
-          <div className=' m-10 text-justify w-12/12 text-sm	leading-relaxed'>
-            <p className=''>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida, leo vitae aliquam feugiat, lorem mi suscipit velit, id posuere mi augue dapibus magna. 
-Duis imperdiet sem ut convallis ultricies. Ut tempus non eros non venenatis. Vestibulum elit ligula, ultricies vel massa eget, aliquet ornare orci. 
-Praesent sit amet quam a sem sagittis scelerisque. Etiam iaculis ac est at varius. Etiam bibendum eleifend dictum.</p>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc gravida, leo vitae aliquam feugiat, lorem mi suscipit velit, id posuere mi augue dapibus magna. 
-Duis imperdiet sem ut convallis ultricies. Ut tempus non eros non venenatis. Vestibulum elit ligula, ultricies vel massa eget, aliquet ornare orci. 
-Praesent sit amet quam a sem sagittis scelerisque. Etiam iaculis ac est at varius. Etiam bibendum eleifend dictum.</p>
+  
+          <div className="m-10 text-justify w-12/12 text-sm leading-relaxed">
+            {construction.content}
           </div>
-          
-          <div  className="flex justify-center items-center w-full">
-             <p className="flex items-center gap-2 text-xs">
-                <FaRegCopyright />
-                <span>2024 Ndinda Design studio. All rights reserved</span>
-            </p>
-          </div>
-
+          {/* <div>
+            <video width="320" height="240" controls>
+              <source src={construction.media} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div> */}
         </div>
-    )
+      )}
+      <div  className="flex justify-center items-center w-full">
+        <p className="flex items-center gap-2 text-xs">
+          <FaRegCopyright />
+          <span>2024 Ndinda Design studio. All rights reserved</span>
+        </p>
+      </div>
+    </div>
+  );
 }
 
-export default Construction
+export default Construction;
