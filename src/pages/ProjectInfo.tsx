@@ -102,14 +102,14 @@ const ProjectInfo = () => {
           <div className="flex flex-row gap-6 h-screen w-screen overflow-hidden">
             <div className="image-scroll overflow-y-scroll w-10/12">
               {project[0].images?.map((image: any, imgIndex: number) => (
-                <img
-                  key={imgIndex}
-                  src={BASE_URL + '/' + image.image}
-                  alt={`image${imgIndex}`}
-                  className="w-full h-full object-cover object-center"
-                  ref={(el) => imagesRef.current[imgIndex] = el}
-                />
-              ))}
+  <img
+    key={imgIndex}
+    src={BASE_URL + '/' + image.image}
+    alt={`image${imgIndex}`}
+    className="w-full h-full object-cover object-center"
+    ref={(el) => el && (imagesRef.current[imgIndex] = el)} // Check if el is not null before assignment
+  />
+))}
             </div>
             <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
               <div className="text-justify text-xs">
