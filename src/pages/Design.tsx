@@ -8,8 +8,8 @@ import { getAllProjects, getAllCategories } from '../services';
 const Design = () => {
     const url = "http://146.190.198.148:3000/";
     const [isOpen, setIsOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const [projects, setProjects] = useState([]);
+    const [categories, setCategories] = useState<any[]>([]); // Adjust the type as needed
+    const [projects, setProjects] = useState<any[]>([]); // Adjust the type as needed
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [showDetails, setShowDetails] = useState(Array(12).fill(false));
     const [clickedCard, setClickedCard] = useState<null | number>(null);
