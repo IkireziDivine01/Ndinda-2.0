@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://146.190.198.148:3000";
+export const BASE_URL = "http://146.190.198.148:3000";
 
 const defaultOptions = {
   baseURL: BASE_URL,
@@ -28,6 +28,11 @@ export const getAllProjects = async () => {
 
 export const getAllProjectsById = async (id:string) =>{
   const res = await ndinda_instance.get(`/api/projects/${id}`);
+  return res.data;
+};
+
+export const getAllCategories = async () => {
+  const res = await ndinda_instance.get(`/api/categories`);
   return res.data;
 };
 

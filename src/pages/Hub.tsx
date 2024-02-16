@@ -7,7 +7,7 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { IoChevronUp } from "react-icons/io5";
-import { getAllPages } from "../services";
+import { getAllPages, BASE_URL } from "../services";
 
 const Hub = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,7 +23,6 @@ const Hub = () => {
         console.log("Data type:", typeof data); // Logging the type of data received
         if (data && data.length > 0) {
           setHub(data[1]); // Fetching the first element of the array
-          console.log("Hub set:", data[1]); // Logging the construction set
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,6 +32,8 @@ const Hub = () => {
     fetchData();
   }, []);
 
+  console.log('Hub:', hub);
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     setProjectsDropdownOpen(false);
@@ -76,9 +77,10 @@ const Hub = () => {
   };
 
   return (
-    <div>
-      <div>
-        <div className="flex justify-between items-center px-2 bg-gray-100"> 
+    <>
+    {hub && ( // Add null check for hub
+    <div className="absolute top-0 left-0 w-full">
+        <div className="w-12/12 absolute top-0 left-0 right-0 flex justify-between items-center px-2 bg-gray-100 bg-opacity-20 shadow-md backdrop-blur-sm "> 
           <div>
             <a href="/">
               <img src={logo} alt="logo" className="w-20 h-20" />
@@ -91,16 +93,15 @@ const Hub = () => {
                 <ul className="flex gap-10">
                   <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
                   <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li>
-                  <li><a href="/contactUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li>
-                  <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
+                  <li><a href="/contactUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Hub</a></li>
+                  {/* <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li> */}
                 </ul>
               )}
             </nav>
           </div>
         </div>
-      </div> 
 
-      <video
+       <video
         ref={videoRef}
         className="w-full h-2/3"
         loop
@@ -111,17 +112,16 @@ const Hub = () => {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
-        <source src={vid} type="video/mp4" />
+        <source src={BASE_URL+'/'+hub.media} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
       <div
         style={{
           position: 'absolute',
           bottom: 0,
           right: 4,
           width: '10%',
-          height: '25%',
+          height: '20%',
           backgroundColor: '#A56D47',
           display: 'flex',
           justifyContent: 'center',
@@ -163,6 +163,8 @@ const Hub = () => {
         </div>
       </div>
     </div>
+    )}
+    </>
   );
 }
 

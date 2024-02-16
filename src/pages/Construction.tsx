@@ -3,7 +3,7 @@ import Header from '../components/header';
 import { FaRegCopyright } from "react-icons/fa6";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import {useRef ,useState, useEffect } from 'react';
-import { getAllPages } from '../services';
+import { getAllPages, BASE_URL } from '../services';
 import about from '../assets/about.mp4'
 
 const Construction = () => {
@@ -54,6 +54,11 @@ const Construction = () => {
       video.pause();
     }
   };
+
+  const handleChat = () =>{
+    const url = "https://www.officeats.rw/menu"
+    window.open(url, '_blank');
+  }
   
   return (
     <div>
@@ -70,7 +75,7 @@ const Construction = () => {
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
       >
-        <source src={about} type="video/mp4" />
+        <source src={BASE_URL+'/'+construction.media} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
@@ -90,7 +95,7 @@ const Construction = () => {
           borderRadius: '10%',
         }}
       >
-        <div>
+        <div onClick={handleChat}>
           <ul className="flex flex-col">
             <li className="flex gap-1 items-center text-main-light">
               <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
