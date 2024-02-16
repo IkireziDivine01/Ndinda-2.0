@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL } from '../services';
 
 const ProjectInfo = () => {
-  const { projectId } = useParams<{ projectId: string }>(); // Added type annotation for projectId
-  const [isOpen, setIsOpen] = useState<boolean>(false); // Added type annotation for isOpen
-  const [currentImage, setCurrentImage] = useState<number>(1); // Added type annotation for currentImage
-  const [project, setProject] = useState<any>(); // Added type annotation for project
-  const [nextProject, setNextProject] = useState<any>(); // Added type annotation for nextProject
-  const nextProjectId: number = parseInt(projectId) + 1; // Added type annotation for nextProjectId
+  const { projectId } = useParams<{ projectId: string }>(); // 1. Type assertion for projectId
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentImage, setCurrentImage] = useState<number>(1);
+  const [project, setProject] = useState<any>(); // 2. Type assertion for project
+  const [nextProject, setNextProject] = useState<any>(); // 2. Type assertion for nextProject
+  const nextProjectId: number = parseInt(projectId) + 1;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,20 +33,20 @@ const ProjectInfo = () => {
     };
 
     fetchData();
-  }, [projectId, nextProjectId]); // Added nextProjectId to the dependency array
+  }, [projectId, nextProjectId]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const imagesRef = useRef<HTMLImageElement[]>([]); // Added type annotation for imagesRef
+  const imagesRef = useRef<HTMLImageElement[]>([]); // 3. Type assertion for imagesRef
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = imagesRef.current.indexOf(entry.target);
+            const index = imagesRef.current.indexOf(entry.target as HTMLImageElement); // Added type assertion
             setCurrentImage(index + 1);
           }
         });
@@ -99,7 +99,7 @@ const ProjectInfo = () => {
 
           <div className="flex flex-row gap-6 h-screen w-screen overflow-hidden">
             <div className="image-scroll overflow-y-scroll w-10/12">
-              {project[0].images?.map((image: any, imgIndex: number) => ( // Added type annotations for image and imgIndex
+              {project[0].images?.map((image: any, imgIndex: number) => (
                 <img
                   key={imgIndex}
                   src={BASE_URL + '/' + image.image}
