@@ -6,11 +6,11 @@ import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL } from '../services';
 
 const ProjectInfo = () => {
-  const { projectId } = useParams<{ projectId: string }>(); // 1. Type assertion for projectId
+  const { projectId } = useParams<{ projectId: string }>() || { projectId: "" }; // Ensure projectId is not undefined
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<number>(1);
-  const [project, setProject] = useState<any>(); // 2. Type assertion for project
-  const [nextProject, setNextProject] = useState<any>(); // 2. Type assertion for nextProject
+  const [project, setProject] = useState<any>();
+  const [nextProject, setNextProject] = useState<any>();
   const nextProjectId: number = parseInt(projectId) + 1;
 
   useEffect(() => {
@@ -32,21 +32,23 @@ const ProjectInfo = () => {
       }
     };
 
-    fetchData();
+    if (projectId) { // Check if projectId is defined before fetching data
+      fetchData();
+    }
   }, [projectId, nextProjectId]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  const imagesRef = useRef<HTMLImageElement[]>([]); // 3. Type assertion for imagesRef
+  const imagesRef = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const index = imagesRef.current.indexOf(entry.target as HTMLImageElement); // Added type assertion
+            const index = imagesRef.current.indexOf(entry.target as HTMLImageElement);
             setCurrentImage(index + 1);
           }
         });
