@@ -6,35 +6,33 @@ import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL } from '../services';
 
 const ProjectInfo = () => {
-  const { projectId } = useParams<{ projectId: string }>() || { projectId: "" }; // Ensure projectId is not undefined
+  const { projectId } = useParams<{ projectId: string }>() || { projectId: undefined }; // Ensure projectId is not undefined
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<number>(1);
-  const [project, setProject] = useState<any>();
-  const [nextProject, setNextProject] = useState<any>();
-  const nextProjectId: number = parseInt(projectId) + 1;
+  const [project, setProject] = useState<any>(null); // Initialize project with null
+  const [nextProject, setNextProject] = useState<any>(null); // Initialize nextProject with null
+  const nextProjectId: number | undefined = projectId ? parseInt(projectId) + 1 : undefined; // Handle possible undefined projectId
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getAllProjectsById(projectId);
-        console.log("Data fetched:", data);
-        setProject(data);
+        if (projectId) { // Check if projectId is defined
+          const data = await getAllProjectsById(projectId);
+          console.log("Data fetched:", data);
+          setProject(data);
 
-        const nextProjectData = await getAllProjectsById(nextProjectId.toString());
-        setNextProject(nextProjectData);
-        if (nextProjectData) {
-          console.log("Next project:", nextProjectData);
-        } else {
-          console.log("No next project found");
+          if (nextProjectId) { // Check if nextProjectId is defined
+            const nextProjectData = await getAllProjectsById(nextProjectId.toString());
+            setNextProject(nextProjectData);
+            console.log("Next project:", nextProjectData || "No next project found");
+          }
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    if (projectId) { // Check if projectId is defined before fetching data
-      fetchData();
-    }
+    fetchData();
   }, [projectId, nextProjectId]);
 
   const toggleMenu = () => {
@@ -70,7 +68,9 @@ const ProjectInfo = () => {
   }, []);
 
   const handleNextProjectClick = () => {
-    window.location.href = `/projectInfo/${nextProjectId}`;
+    if (nextProjectId) {
+      window.location.href = `/projectInfo/${nextProjectId}`;
+    }
   }
 
   return (
@@ -113,21 +113,21 @@ const ProjectInfo = () => {
             </div>
             <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
               <div className="text-justify text-xs">
-                {currentImage === project[0].images.length && nextProject ? (
-                  <p className='flex flex-col'>
-                    <span className='text-xs font-bold'>Next project</span>
-                    <span className='text-sm italic underline bottom-0 absolute' onClick={handleNextProjectClick}>{nextProject[0]?.title}</span>
-                  </p>
-                ) : (
-                  <div>
-                    <h6 className="text-xl pb-6">{project[0].title}</h6>
-                    {project[0].description}
-                    <span className='flex flex-row gap-x-4'>
-                      <span className='flex flex-col text-sm italic pt-2'>Location <span>Kigali</span></span>
-                      <span className='flex flex-col text-sm italic pt-2'>Completion <span>{project[0].end_date}</span></span>
-                    </span>
-                  </div>
-                )}
+               {currentImage === (project[0].images?.length || 0) && nextProject ? (
+      <p className='flex flex-col'>
+        <span className='text-xs font-bold'>Next project</span>
+        <span className='text-sm italic underline bottom-0 absolute' onClick={handleNextProjectClick}>{nextProject[0].title}</span>
+      </p>
+    ) : (
+      <div>
+        <h6 className="text-xl pb-6">{project[0].title}</h6>
+        {project[0].description}
+        <span className='flex flex-row gap-x-4'>
+          <span className='flex flex-col text-sm italic pt-2'>Location <span>Kigali</span></span>
+          <span className='flex flex-col text-sm italic pt-2'>Completion <span>{project[0].end_date}</span></span>
+        </span>
+      </div>
+    )}
               </div>
             </div>
           </div>
