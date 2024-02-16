@@ -1,11 +1,11 @@
-import react, {useState} from "react";
+import  {useState} from "react";
 import './styles/ContactUs.css';
 import { FaLocationCrosshairs } from "react-icons/fa6";
 import { HiOutlineMail } from "react-icons/hi";
 import { FaPhoneAlt } from "react-icons/fa";
-import image2 from '../assets/Ndinda 2.png';
-import logo from '../assets/Ndinda logo.png'
-import { IoClose } from "react-icons/io5";
+// import image2 from '../assets/Ndinda 2.png';
+// import logo from '../assets/Ndinda logo.png'
+// import { IoClose } from "react-icons/io5";
 import Header from "../components/header";
 
 const ContactUs = () => {
@@ -15,22 +15,22 @@ const ContactUs = () => {
         setShowForm(true);
     };
 
-     const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+//      const [formData, setFormData] = useState({
+//     name: '',
+//     email: '',
+//     message: ''
+//   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+//   const handleChange = (e) => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value });
+//   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add your logic to handle form submission (e.g., send data to server)
-    console.log('Form submitted:', formData);
-     setShowForm(false);
-  };
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     // Add your logic to handle form submission (e.g., send data to server)
+//     console.log('Form submitted:', formData);
+//      setShowForm(false);
+//   };
 
     return (
        <div>
@@ -59,7 +59,7 @@ const ContactUs = () => {
                 {showForm ? (
                     <div className="form-container">
                         {/* Your form elements go here */}
-                        <form onSubmit={handleSubmit}>
+                        {/* <form onSubmit={handleSubmit}>
                             <label className="close-icon">
                                 <IoClose onClick={() => setShowForm(false)} />
                                 Close
@@ -94,11 +94,11 @@ const ContactUs = () => {
                                 />
                             </label>
                             <button className="button-class" type="submit">Submit</button>
-                        </form>
+                        </form> */}
                     </div>
                 ) : (
                         <div className="image-form">
-                            <img src={image2} alt="architectural picture" />
+                            {/* <img src={image2} alt="architectural picture" /> */}
                         </div>
                     )}
         </div>

@@ -1,52 +1,54 @@
-import React, { useRef, useState } from "react";
+// import React, { useRef, useState } from "react";
 // import './styles/Aboutus.css'
-import about from "../assets/about.mp4";
-import logo from "../assets/Ndinda logo.png";
-import { FaBars, FaTimes } from 'react-icons/fa';
+// import about from "../assets/about.mp4";
+// import logo from "../assets/Ndinda logo.png";
+// import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Aboutus = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  // const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-     setProjectsDropdownOpen(false);
-  };
+  // const toggleMenu = () => {
+  //   setIsOpen(!isOpen);
+  //    setProjectsDropdownOpen(false);
+  // };
 
-  const toggleProjectsDropdown = () => {
-    setProjectsDropdownOpen(!isProjectsDropdownOpen);
-  };
-   const videoRef = useRef();
-  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  // const toggleProjectsDropdown = () => {
+  //   setProjectsDropdownOpen(!isProjectsDropdownOpen);
+  // };
+  //  const videoRef = useRef();
+  // const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
-  const handleUserInteraction = () => {
-    const video = videoRef.current;
+  // const handleUserInteraction = () => {
+  //   const video = videoRef.current;
 
-    if (!hasUserInteracted) {
-      video.play().then(() => {
-        setHasUserInteracted(true);
-      });
-    }
-  };
+  //   if (!hasUserInteracted) {
+  //     video.play().then(() => {
+  //       setHasUserInteracted(true);
+  //     });
+  //   }
+  // };
 
-  const handleMouseOver = () => {
-    const video = videoRef.current;
-    if (hasUserInteracted && video.paused) {
-      video.play();
-    }
-  };
+  // const handleMouseOver = () => {
+  //   const video = videoRef.current;
+  //   if (hasUserInteracted && video.paused) {
+  //     video.play();
+  //   }
+  // };
 
-  const handleMouseOut = () => {
-    const video = videoRef.current;
-    if (hasUserInteracted && !video.paused) {
-      video.pause();
-    }
-  };
+  // const handleMouseOut = () => {
+  //   const video = videoRef.current;
+  //   if (hasUserInteracted && !video.paused) {
+  //     video.pause();
+  //   }
+  // };
 
     return(
       <>
+
+      <p>Under development</p>
         
-        <div className="pt-4 pb-4">
+        {/* <div className="pt-4 pb-4">
                 <div className="flex justify-between items-center px-4 py-2 bg-gray-100"> 
       <div>
         <a href="/">
@@ -83,7 +85,7 @@ const Aboutus = () => {
       >
         <source src={about} type="video/mp4" />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
   </>
     )
 };

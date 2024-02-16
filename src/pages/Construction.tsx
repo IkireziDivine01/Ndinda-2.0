@@ -1,13 +1,12 @@
-import video from '../assets/video2.png';
-import Header from '../components/header';
+import { useRef, useState, useEffect } from 'react';
 import { FaRegCopyright } from "react-icons/fa6";
 import { IoChatbubbleOutline } from "react-icons/io5";
-import {useRef ,useState, useEffect } from 'react';
 import { getAllPages, BASE_URL } from '../services';
-import about from '../assets/about.mp4'
+import Header from '../components/header';
 
 const Construction = () => {
-  const [construction, setConstruction] = useState();
+  const videoRef = useRef<HTMLVideoElement>(null); // Add explicit type annotation
+  const [construction, setConstruction] = useState<any>(); // Add explicit type annotation for construction
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,13 +27,13 @@ const Construction = () => {
   }, []);
 
   console.log('Construction:', construction);
-  const videoRef = useRef();
+
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   const handleUserInteraction = () => {
     const video = videoRef.current;
 
-    if (!hasUserInteracted) {
+    if (video && !hasUserInteracted) { // Null check added here
       video.play().then(() => {
         setHasUserInteracted(true);
       });
@@ -43,87 +42,80 @@ const Construction = () => {
 
   const handleMouseOver = () => {
     const video = videoRef.current;
-    if (hasUserInteracted && video.paused) {
+    if (video && hasUserInteracted && video.paused) { // Null check added here
       video.play();
     }
   };
 
   const handleMouseOut = () => {
     const video = videoRef.current;
-    if (hasUserInteracted && !video.paused) {
+    if (video && hasUserInteracted && !video.paused) { // Null check added here
       video.pause();
     }
   };
 
-  const handleChat = () =>{
+  const handleChat = () => {
     const url = "https://www.officeats.rw/menu"
     window.open(url, '_blank');
   }
-  
+
   return (
     <div>
       {construction && ( // Add null check for construction
         <div className='absolute top-0 left-0 w-full'>
-    <video
-        ref={videoRef}
-        className="w-full h-2/3"
-        loop
-        autoPlay
-        playsInline
-        muted
-        onClick={handleUserInteraction}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
-      >
-        <source src={BASE_URL+'/'+construction.media} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
-        <Header/>
-      </div>
-      <div
-        style={{
-          position: 'fixed',
-          bottom: 10,
-          right: 4,
-          width: '8%',
-          height: '5%',
-          backgroundColor: '#A56D47',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: '10%',
-        }}
-      >
-        <div onClick={handleChat}>
-          <ul className="flex flex-col">
-            <li className="flex gap-1 items-center text-main-light">
-              <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
-                <IoChatbubbleOutline style={{color: 'white'}}/>
-              </a>
-              Let's chat
-            </li>
-          </ul>
-        </div>
-      </div>
-  
+          <video
+            ref={videoRef}
+            className="w-full h-2/3"
+            loop
+            autoPlay
+            playsInline
+            muted
+            onClick={handleUserInteraction}
+            onMouseOver={handleMouseOver}
+            onMouseOut={handleMouseOut}
+          >
+            <source src={BASE_URL + '/' + construction.media} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+            <Header />
+          </div>
+          <div
+            style={{
+              position: 'fixed',
+              bottom: 10,
+              right: 4,
+              width: '8%',
+              height: '5%',
+              backgroundColor: '#A56D47',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderRadius: '10%',
+            }}
+          >
+            <div onClick={handleChat}>
+              <ul className="flex flex-col">
+                <li className="flex gap-1 items-center text-main-light">
+                  <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+                    <IoChatbubbleOutline style={{ color: 'white' }} />
+                  </a>
+                  Let's chat
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <div className="m-10 text-justify w-12/12 text-sm leading-relaxed">
             {construction.content}
           </div>
-          {/* <div>
-            <video width="320" height="240" controls>
-              <source src={construction.media} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          </div> */}
 
-          <div  className="flex justify-center items-center w-full">
-        <p className="flex items-center gap-2 text-xs">
-          <FaRegCopyright />
-          <span>2024 Ndinda Design studio. All rights reserved</span>
-        </p>
-      </div>
-
+          <div className="flex justify-center items-center w-full">
+            <p className="flex items-center gap-2 text-xs">
+              <FaRegCopyright />
+              <span>2024 Ndinda Design studio. All rights reserved</span>
+            </p>
+          </div>
         </div>
       )}
     </div>
