@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./styles/slider.css";
 
 type ISliderProps = {
@@ -69,14 +69,14 @@ export default function Slider({ slides }: ISliderProps) {
               </a>
             </div>
             <div className="slider__slide-parts">
-              {[...Array(IMAGE_PARTS).fill()].map((_, i) => (
+              {/* {[...Array(IMAGE_PARTS).fill()].map((_, i) => (
                 <div className="slider__slide-part" key={i}>
                   <div
                     className="slider__slide-part-inner"
                     style={{ backgroundImage: `url(${slide.img})`, paddingTop: "20%", width: "100%"}}
                   />
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
         ))}

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './styles/LandingPage.css';
 import Loader from '../components/loader';
 import Header from '../components/header';
-import landingGif from '../assets/landingGif.gif';
 import { BASE_URL, getAllConfigs, getAllPages } from '../services';
 
 const LandingPage = () => {

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import logo from "../assets/logo.png";
 import { FaBars, FaTimes } from 'react-icons/fa';
 
@@ -11,9 +11,9 @@ export default function Header() {
      setProjectsDropdownOpen(false);
   };
 
-  const toggleProjectsDropdown = () => {
-    setProjectsDropdownOpen(!isProjectsDropdownOpen);
-  };
+  // const toggleProjectsDropdown = () => {
+  //   setProjectsDropdownOpen(!isProjectsDropdownOpen);
+  // };
 
   return (
     <div className="flex justify-between items-center px-2  bg-gray-100"> 

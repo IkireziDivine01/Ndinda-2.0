@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
-import ReactPlayer from 'react-player';
+import { useRef, useState } from 'react';
 import loader from '../assets/loader.mp4';
 
 const Loader = () => {
