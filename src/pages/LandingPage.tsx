@@ -16,6 +16,8 @@ const LandingPage = () => {
         // const data = await getAllConfigs();
         // setConfigs(data); // Unused variable
         const home = await getAllPages();
+        console.log('home:', home);
+        
         if (home && home.length > 0) {
           setLanding(home[4]); // Fetching the first element of the array
         }
@@ -27,7 +29,7 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
-  console.log('landing:', landing);
+  // console.log('landing:', landing);
 
   if (isLoading) {
     return <Loader />;
