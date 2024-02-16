@@ -5,18 +5,20 @@ import { IoChatbubbleOutline, IoDocumentTextOutline, IoChevronDownOutline, IoChe
 import { SiGoogleclassroom } from "react-icons/si";
 import { getAllPages, BASE_URL } from "../services";
 
+interface HubData {
+  media: string; // Assuming 'media' is a string
+  // Define other properties if needed
+}
+
 const Hub = () => {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
   const [isCohortDropdownOpen, setCohortDropdownOpen] = useState(false);
-  const [hub, setHub] = useState();
+  const [hub, setHub] = useState<HubData | null>(null); // Specify the type of 'hub'
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllPages();
-        console.log("Data fetched:", data); // Logging the fetched data
-        console.log("Data type:", typeof data); // Logging the type of data received
         if (data && data.length > 0) {
           setHub(data[1]); // Fetching the first element of the array
         }
@@ -30,7 +32,6 @@ const Hub = () => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-    // setProjectsDropdownOpen(false);
     setCohortDropdownOpen(false);
   };
 
@@ -69,7 +70,6 @@ const Hub = () => {
     <>
     {hub && (
     <div className="absolute top-0 left-0 w-full">
-
        <video
         ref={videoRef}
         className="w-full h-2/3"

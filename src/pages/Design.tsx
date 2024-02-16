@@ -42,7 +42,7 @@ const Design = () => {
         setClickedCard(cardIndex);
     };
 
-    const handleDoubleClick = (cardIndex: number, projectId: number) => {
+    const handleDoubleClick = (projectId: number) => {
         window.location.href = `/projectInfo/${projectId}`;
     };
 
@@ -92,7 +92,7 @@ const Design = () => {
                                 key={index}
                                 className={`card ${clickedCard === index && "clicked"} red w-auto h-auto pb-2`}
                                 onClick={() => handleSeeMoreClick(index)}
-                                onDoubleClick={() => handleDoubleClick(index, project.id)}
+                                onDoubleClick={() => handleDoubleClick(project.id)}
                             >
                                 {project.images?.length > 0 && (
                                     <img
