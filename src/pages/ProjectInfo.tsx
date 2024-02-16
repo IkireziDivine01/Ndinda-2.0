@@ -6,24 +6,23 @@ import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL } from '../services';
 
 const ProjectInfo = () => {
-  const { projectId } = useParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const [currentImage, setCurrentImage] = useState(1); // State to track current image
-  const [project, setProject] = useState();
-  const [nextProject, setNextProject] = useState();
-   const nextProjectId = parseInt(projectId) + 1; // Assuming project IDs are numeric
+  const { projectId } = useParams<{ projectId: string }>(); // Added type annotation for projectId
+  const [isOpen, setIsOpen] = useState<boolean>(false); // Added type annotation for isOpen
+  const [currentImage, setCurrentImage] = useState<number>(1); // Added type annotation for currentImage
+  const [project, setProject] = useState<any>(); // Added type annotation for project
+  const [nextProject, setNextProject] = useState<any>(); // Added type annotation for nextProject
+  const nextProjectId: number = parseInt(projectId) + 1; // Added type annotation for nextProjectId
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllProjectsById(projectId);
-        console.log("Data fetched:", data); // Logging the fetched data
-        setProject(data); // Setting fetched project
+        console.log("Data fetched:", data);
+        setProject(data);
 
         const nextProjectData = await getAllProjectsById(nextProjectId.toString());
         setNextProject(nextProjectData);
         if (nextProjectData) {
-          // If next project exists, do something with it
           console.log("Next project:", nextProjectData);
         } else {
           console.log("No next project found");
@@ -34,30 +33,28 @@ const ProjectInfo = () => {
     };
 
     fetchData();
-  }, [projectId]); // Fetch data whenever projectId changes
+  }, [projectId, nextProjectId]); // Added nextProjectId to the dependency array
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  // Refs for images and text div
-  const imagesRef = useRef([]);
+  const imagesRef = useRef<HTMLImageElement[]>([]); // Added type annotation for imagesRef
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Get the index of the intersecting image
             const index = imagesRef.current.indexOf(entry.target);
-            setCurrentImage(index + 1); // Images are 1-indexed
+            setCurrentImage(index + 1);
           }
         });
       },
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.5, // Adjust as needed
+        threshold: 0.5,
       }
     );
 
@@ -68,16 +65,15 @@ const ProjectInfo = () => {
     return () => {
       observer.disconnect();
     };
-  }, []); // Only run once on component mount
+  }, []);
 
   const handleNextProjectClick = () => {
-    // Do something when next project is clicked
-      window.location.href = `/projectInfo/${nextProjectId}`;
+    window.location.href = `/projectInfo/${nextProjectId}`;
   }
 
   return (
     <>
-      {project && ( // Add null check for project
+      {project && (
         <div className="flex flex-col max-h-screen">
           <div className='w-12/12 absolute top-0 left-0 right-0 z-10'>
             <div className="flex justify-between items-center px-4 py-2 bg-gray-100">
@@ -103,7 +99,7 @@ const ProjectInfo = () => {
 
           <div className="flex flex-row gap-6 h-screen w-screen overflow-hidden">
             <div className="image-scroll overflow-y-scroll w-10/12">
-              {project[0].images?.map((image, imgIndex) => (
+              {project[0].images?.map((image: any, imgIndex: number) => ( // Added type annotations for image and imgIndex
                 <img
                   key={imgIndex}
                   src={BASE_URL + '/' + image.image}
@@ -112,10 +108,6 @@ const ProjectInfo = () => {
                   ref={(el) => imagesRef.current[imgIndex] = el}
                 />
               ))}
-              {/* this happens when we have a next project */}
-              {/* {nextProject && (
-              <img src={BASE_URL + '/' + nextProject[0]?.images[0].image} alt={nextProject[0]?.title} className=" nextProjectImg w-full h-full object-cover object-center" />
-              )} */}
             </div>
             <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
               <div className="text-justify text-xs">
