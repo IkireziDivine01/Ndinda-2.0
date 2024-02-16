@@ -3,10 +3,9 @@ import logo from "../assets/Ndinda logo.png";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import './styles/Design.css';
 import { Link } from 'react-router-dom';
-import { getAllProjects, getAllCategories } from '../services';
+import { getAllProjects, getAllCategories, BASE_URL } from '../services';
 
 const Design = () => {
-    const url = "http://146.190.198.148:3000/";
     const [isOpen, setIsOpen] = useState(false);
     const [categories, setCategories] = useState<any[]>([]); // Adjust the type as needed
     const [projects, setProjects] = useState<any[]>([]); // Adjust the type as needed
@@ -97,7 +96,7 @@ const Design = () => {
                                 {project.images?.length > 0 && (
                                     <img
                                         key={project.images[0].id}
-                                        src={url + project.images[0].image}
+                                        src={BASE_URL+ '/' + project.images[0].image}
                                         alt={`image${index}`}
                                         className="w-full h-48 object-cover object-center"
                                     />

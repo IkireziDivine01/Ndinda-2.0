@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "http://146.190.198.148:3000";
+export const BASE_URL = "https://supreme-stingray-sure.ngrok-free.app";
 
 const defaultOptions = {
   baseURL: BASE_URL,
