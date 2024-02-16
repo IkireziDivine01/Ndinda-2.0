@@ -6,6 +6,7 @@ const defaultOptions = {
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    "ngrok-skip-browser-warning": true,
   },
 };
 

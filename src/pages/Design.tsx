@@ -28,6 +28,8 @@ const Design = () => {
         fetchData();
     }, []);
 
+    console.log("categories are: ",categories);
+
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };

@@ -27,6 +27,8 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
+  console.log('landing:', landing);
+
   if (isLoading) {
     return <Loader />;
   }
