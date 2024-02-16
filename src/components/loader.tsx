@@ -2,13 +2,13 @@ import { useRef, useState } from 'react';
 import loader from '../assets/loader.mp4';
 
 const Loader = () => {
-  const videoRef = useRef();
+  const videoRef = useRef<HTMLVideoElement>(null); // Add explicit type annotation
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
   const handleUserInteraction = () => {
     const video = videoRef.current;
 
-    if (!hasUserInteracted) {
+    if (video && !hasUserInteracted) { // Null check added here
       video.play().then(() => {
         setHasUserInteracted(true);
       });
@@ -17,14 +17,14 @@ const Loader = () => {
 
   const handleMouseOver = () => {
     const video = videoRef.current;
-    if (hasUserInteracted && video.paused) {
+    if (video && hasUserInteracted && video.paused) { // Null check added here
       video.play();
     }
   };
 
   const handleMouseOut = () => {
     const video = videoRef.current;
-    if (hasUserInteracted && !video.paused) {
+    if (video && hasUserInteracted && !video.paused) { // Null check added here
       video.pause();
     }
   };

@@ -4,11 +4,11 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
+  // const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
-     setProjectsDropdownOpen(false);
+    //  setProjectsDropdownOpen(false);
   };
 
   // const toggleProjectsDropdown = () => {

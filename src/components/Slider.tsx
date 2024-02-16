@@ -9,7 +9,7 @@ type ISliderProps = {
   }[];
 };
 
-const IMAGE_PARTS = 4;
+// const IMAGE_PARTS = 4;
 const AUTOCHANGE_TIME = 4000;
 
 export default function Slider({ slides }: ISliderProps) {
