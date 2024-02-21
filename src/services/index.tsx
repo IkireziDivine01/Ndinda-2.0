@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BASE_URL = "https://supreme-stingray-sure.ngrok-free.app";
+export const BASE_URL = "https://dashboard.ndinda.rw";
 
 const defaultOptions = {
   baseURL: BASE_URL,

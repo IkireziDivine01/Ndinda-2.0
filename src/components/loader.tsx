@@ -30,10 +30,10 @@ const Loader = () => {
   };
 
   return (
-    <div className='h-screen flex items-center justify-center'>
+    <div className='h-screen w-full absolute top-0 left-0'>
       <video
         ref={videoRef}
-        className="w-3/5"
+        className="w-full h-full"
         loop
         autoPlay
         playsInline

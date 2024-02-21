@@ -84,10 +84,10 @@ const Hub = () => {
         <source src={BASE_URL+'/'+hub.media} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-       <div className="w-12/12 absolute top-0 left-0 right-0 flex justify-between items-center px-2 bg-gray-100 bg-opacity-20 shadow-md backdrop-blur-sm "> 
+       <div className="w-12/12 absolute top-0 left-0 right-0 flex justify-between items-center px-2 bg-gray-100 bg-opacity-20 shadow-md backdrop-blur-sm p-2"> 
           <div>
             <a href="/">
-              <img src={logo} alt="logo" className="w-20 h-20" />
+              <img src={logo} alt="logo" className="w-16 h-12" />
             </a>
           </div>
           <div className="pr-2 flex gap-10">
