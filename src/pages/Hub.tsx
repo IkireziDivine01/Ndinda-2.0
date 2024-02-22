@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { IoChatbubbleOutline, IoDocumentTextOutline, IoChevronDownOutline, IoChevronUp } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
-import { getAllPages, BASE_URL, getAllCohorts, getAllCohortsById } from "../services";
+import { getAllPages, BASE_URL, getAllCohorts } from "../services";
 import Header from "../components/header";
 
 interface HubData {
@@ -111,8 +111,8 @@ const Hub = () => {
       >
         <div>
           <ul className="flex flex-col gap-4">
-            <li className="flex gap-1 items-center text-main-light" onClick={handleDowloadCohortInfo(cohorts.application_url)}>
-              <a href={BASE_URL+'/'+cohorts.application_url} className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+            <li className="flex gap-1 items-center text-main-light" onClick={() =>handleDowloadCohortInfo(cohorts[0]?.pdfs[0]?.file)}>
+              <a href="/" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
                 <IoDocumentTextOutline style={{color: 'white'}}/>
               </a> Application
             </li>
@@ -128,7 +128,7 @@ const Hub = () => {
               <div className="absolute rounded-md top-1/2 mt-2 right-1 bg-main-light w-20">
                 {cohorts.map((cohort, index) => (
                   <ul key={index}>
-                    <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer" onClick={handleDowloadCohortInfo(cohort?.pdfs[0]?.file)}>{cohort.title}</li>
+                    <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleDowloadCohortInfo(cohort?.pdfs[0]?.file)}>{cohort.title}</li>
                   </ul>
                 ))}
               </div>

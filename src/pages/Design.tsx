@@ -120,7 +120,7 @@ const Design = () => {
     {selectedCategory !== "All" &&
         categories.map(category => {
             if (selectedCategory === category.title) {
-                return category.projects.map((project, index) => (
+                return category.projects.map((project:any, index:any) => (
                     <div
                         key={index}
                         className={`card ${clickedCard === index && "clicked"} red w-auto h-auto pb-2`}
