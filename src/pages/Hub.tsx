@@ -1,9 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import logo from "../assets/Ndinda logo.png";
-import { FaBars, FaTimes } from 'react-icons/fa';
 import { IoChatbubbleOutline, IoDocumentTextOutline, IoChevronDownOutline, IoChevronUp } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
-import { getAllPages, BASE_URL } from "../services";
+import { getAllPages, BASE_URL, getAllCohorts, getAllCohortsById } from "../services";
+import Header from "../components/header";
 
 interface HubData {
   media: string; // Assuming 'media' is a string
@@ -11,14 +10,19 @@ interface HubData {
 }
 
 const Hub = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
   const [isCohortDropdownOpen, setCohortDropdownOpen] = useState(false);
   const [hub, setHub] = useState<HubData | null>(null); // Specify the type of 'hub'
+  const [cohorts, setCohorts] = useState<any[]>([]); // Adjust the type as needed
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllPages();
+        const info = await getAllCohorts();
+        setCohorts(info);
+        // console.log("Cohorts are: ", info);
+        
         if (data && data.length > 0) {
           setHub(data[1]); // Fetching the first element of the array
         }
@@ -30,10 +34,10 @@ const Hub = () => {
     fetchData();
   }, []);
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-    setCohortDropdownOpen(false);
-  };
+  // const toggleMenu = () => {
+  //   setIsOpen(!isOpen);
+  //   setCohortDropdownOpen(false);
+  // };
 
   const toggleCohortDropdown = () => {
     setCohortDropdownOpen(!isCohortDropdownOpen);
@@ -66,6 +70,10 @@ const Hub = () => {
     }
   };
 
+  const handleDowloadCohortInfo = (url: any) => {
+    window.open(BASE_URL+'/'+url, "_blank");
+  }
+
   return (
     <>
     {hub && (
@@ -84,25 +92,9 @@ const Hub = () => {
         <source src={BASE_URL+'/'+hub.media} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-       <div className="w-12/12 absolute top-0 left-0 right-0 flex justify-between items-center px-2 bg-gray-100 bg-opacity-20 shadow-md backdrop-blur-sm p-2"> 
-          <div>
-            <a href="/">
-              <img src={logo} alt="logo" className="w-16 h-12" />
-            </a>
+     <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+            <Header />
           </div>
-          <div className="pr-2 flex gap-10">
-            <nav className="relative">
-              {isOpen ? <FaTimes className="absolute -right-5 text-2xl mr-4" onClick={toggleMenu} /> : <FaBars onClick={toggleMenu} />}
-              {isOpen && (
-                <ul className="flex gap-10">
-                  <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
-                  <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li>
-                  <li><a href="/contactUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Hub</a></li>
-                </ul>
-              )}
-            </nav>
-          </div>
-        </div>
       <div
         style={{
           position: 'absolute',
@@ -110,7 +102,7 @@ const Hub = () => {
           right: 4,
           width: '10%',
           height: '20%',
-          backgroundColor: '#A56D47',
+          // backgroundColor: '#A56D47',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -119,8 +111,8 @@ const Hub = () => {
       >
         <div>
           <ul className="flex flex-col gap-4">
-            <li className="flex gap-1 items-center text-main-light">
-              <a href="/apply" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+            <li className="flex gap-1 items-center text-main-light" onClick={handleDowloadCohortInfo(cohorts.application_url)}>
+              <a href={BASE_URL+'/'+cohorts.application_url} className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
                 <IoDocumentTextOutline style={{color: 'white'}}/>
               </a> Application
             </li>
@@ -134,11 +126,11 @@ const Hub = () => {
             </li>
             {isCohortDropdownOpen && (
               <div className="absolute rounded-md top-1/2 mt-2 right-1 bg-main-light w-20">
-                <ul>
-                  <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">2024</li>
-                  <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">2023</li>
-                  <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer">2022</li>
-                </ul>
+                {cohorts.map((cohort, index) => (
+                  <ul key={index}>
+                    <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer" onClick={handleDowloadCohortInfo(cohort?.pdfs[0]?.file)}>{cohort.title}</li>
+                  </ul>
+                ))}
               </div>
             )}
             <li className="flex gap-1 items-center text-main-light">

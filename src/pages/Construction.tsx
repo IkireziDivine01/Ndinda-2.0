@@ -1,22 +1,22 @@
 import { useRef, useState, useEffect } from 'react';
 import { FaRegCopyright } from "react-icons/fa6";
 import { IoChatbubbleOutline } from "react-icons/io5";
-import { getAllPages, BASE_URL } from '../services';
+import { getAllPages, BASE_URL, getAllConfigs } from '../services';
 import Header from '../components/header';
 
 const Construction = () => {
   const videoRef = useRef<HTMLVideoElement>(null); // Add explicit type annotation
   const [construction, setConstruction] = useState<any>(); // Add explicit type annotation for construction
+  const [configs, setConfigs] = useState<any>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getAllPages();
-        console.log("Data fetched:", data); // Logging the fetched data
-        console.log("Data type:", typeof data); // Logging the type of data received
+        const footer = await getAllConfigs();
+        setConfigs(footer);
         if (data && data.length > 0) {
           setConstruction(data[0]); // Fetching the first element of the array
-          console.log("Construction set:", data[0]); // Logging the construction set
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -25,8 +25,6 @@ const Construction = () => {
 
     fetchData();
   }, []);
-
-  console.log('Construction:', construction);
 
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
 
@@ -60,7 +58,7 @@ const Construction = () => {
   }
 
   return (
-    <div>
+    <>
       {construction && ( // Add null check for construction
         <div className='absolute top-0 left-0 w-full'>
           <video
@@ -87,7 +85,7 @@ const Construction = () => {
               right: 4,
               width: '8%',
               height: '5%',
-              backgroundColor: '#A56D47',
+              // backgroundColor: '#A56D47',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -111,14 +109,16 @@ const Construction = () => {
           </div>
 
           <div className="flex justify-center items-center w-full">
+            {configs && (
             <p className="flex items-center gap-2 text-xs">
               <FaRegCopyright />
-              <span>2024 Ndinda Design studio. All rights reserved</span>
+              <span>{configs.copyright_text}</span>
             </p>
+            )}
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

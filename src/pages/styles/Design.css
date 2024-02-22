@@ -42,6 +42,8 @@
   text-align: justify;
   padding: 10px;
   visibility: hidden;
+  max-height: calc(4 * 1em);
+  overflow: hidden;
 }
 
 .cards .card.clicked p.second-text {
@@ -138,3 +140,4 @@
 /* .cards .card:hover .button-13{
   visibility: visible;
 } */
+

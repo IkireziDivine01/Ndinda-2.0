@@ -6,25 +6,25 @@ import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL } from '../services';
 
 const ProjectInfo = () => {
-  const { projectId } = useParams<{ projectId: string }>() || { projectId: undefined }; // Ensure projectId is not undefined
+  const { projectId } = useParams<{ projectId: string }>() || { projectId: undefined };
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentImage, setCurrentImage] = useState<number>(1);
-  const [project, setProject] = useState<any>(null); // Initialize project with null
-  const [nextProject, setNextProject] = useState<any>(null); // Initialize nextProject with null
-  const nextProjectId: number | undefined = projectId ? parseInt(projectId) + 1 : undefined; // Handle possible undefined projectId
+  const [project, setProject] = useState<any>(null);
+  const [nextProject, setNextProject] = useState<any>(null);
+  const nextProjectId: number | undefined = projectId ? parseInt(projectId) + 1 : undefined;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (projectId) { // Check if projectId is defined
+        if (projectId) {
           const data = await getAllProjectsById(projectId);
           console.log("Data fetched:", data);
           setProject(data);
 
-          if (nextProjectId) { // Check if nextProjectId is defined
+          if (nextProjectId) {
             const nextProjectData = await getAllProjectsById(nextProjectId.toString());
-            setNextProject(nextProjectData);
-            console.log("Next project:", nextProjectData || "No next project found");
+            setNextProject(nextProjectData[0]);
+            console.log("Next project:", nextProject || "No next project found");
           }
         }
       } catch (error) {
@@ -72,7 +72,7 @@ const ProjectInfo = () => {
       window.location.href = `/projectInfo/${nextProjectId}`;
     }
   }
-
+ 
   return (
     <>
       {project && (
@@ -102,34 +102,55 @@ const ProjectInfo = () => {
           <div className="flex flex-row gap-6 h-screen w-screen overflow-hidden">
             <div className="image-scroll overflow-y-scroll w-10/12">
               {project[0].images?.map((image: any, imgIndex: number) => (
-  <img
-    key={imgIndex}
-    src={BASE_URL + '/' + image.image}
-    alt={`image${imgIndex}`}
-    className="w-full h-full object-cover object-center"
-    ref={(el) => el && (imagesRef.current[imgIndex] = el)} // Check if el is not null before assignment
-  />
-))}
+                <img
+                  key={imgIndex}
+                  src={(imgIndex === project[0].images.length - 1 && nextProject && nextProject.images?.length > 0) ? BASE_URL + '/' + nextProject.images[0].image : BASE_URL + '/' + image.image}
+                  className="w-full h-full object-cover object-center"
+                  ref={(el) => el && (imagesRef.current[imgIndex] = el)} 
+                />
+              ))}
             </div>
-            <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
+
+             <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
               <div className="text-justify text-xs">
                {currentImage === (project[0].images?.length || 0) && nextProject ? (
       <p className='flex flex-col'>
         <span className='text-xs font-bold'>Next project</span>
-        <span className='text-sm italic underline bottom-0 absolute' onClick={handleNextProjectClick}>{nextProject[0].title}</span>
+        <span className='text-sm italic underline bottom-0 absolute' onClick={handleNextProjectClick}>{nextProject.title}</span>
       </p>
     ) : (
       <div>
         <h6 className="text-xl pb-6">{project[0].title}</h6>
         {project[0].description}
         <span className='flex flex-row gap-x-4'>
-          <span className='flex flex-col text-sm italic pt-2'>Location <span>Kigali</span></span>
+          <span className='flex flex-col text-sm italic pt-2'>Location <span>{project[0].location}</span></span>
           <span className='flex flex-col text-sm italic pt-2'>Completion <span>{project[0].end_date}</span></span>
         </span>
       </div>
     )}
               </div>
             </div>
+
+            {/* <div className="flex urugambo flex-col mt-20 w-2/12 pl-4 pr-10">
+              <div className="text-justify text-xs">
+               {currentImage !== (project[0].images?.length || 0) && nextProject && (
+                  <div>
+                    <p className='text-xs font-bold'>Next project</p>
+                    <p className='text-sm italic underline bottom-0 absolute cursor-pointer' onClick={handleNextProjectClick}>{nextProject.title}</p>
+                  </div>
+                )}
+                {currentImage == (project[0].images?.length || 0) && (
+                  <div>
+                    <h6 className="text-xl pb-6">{project[0].title}</h6>
+                    <p>{project[0].description}</p>
+                    <div className='flex flex-row gap-x-4'>
+                      <p className='flex flex-col text-sm italic pt-2'>Location <span>{project[0].location}</span></p>
+                      <p className='flex flex-col text-sm italic pt-2'>Completion <span>{project[0].end_date}</span></p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div> */}
           </div>
         </div>
       )}

@@ -37,4 +37,14 @@ export const getAllCategories = async () => {
   return res.data;
 };
 
+export const getAllCohorts = async () => {
+  const res = await ndinda_instance.get(`/api/cohorts`);
+  return res.data;
+}
+
+export const getAllCohortsById = async (id:string) =>{
+  const res = await ndinda_instance.get(`/api/cohorts/${id}`);
+  return res.data;
+}
+
 export default ndinda_instance

@@ -30,7 +30,7 @@ const Loader = () => {
   };
 
   return (
-    <div className='h-screen w-full absolute top-0 left-0'>
+    <div className='h-screen w-full absolute top-0 left-0 bg-main-light dark:bg-main-light'>
       <video
         ref={videoRef}
         className="w-full h-full"
