@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { IoChatbubbleOutline, IoDocumentTextOutline, IoChevronDownOutline, IoChevronUp } from "react-icons/io5";
 import { SiGoogleclassroom } from "react-icons/si";
-import { getAllPages, BASE_URL, getAllCohorts } from "../services";
+import { getAllPages, BASE_URL, getAllCohorts, getAllConfigs } from "../services";
 import Header from "../components/header";
 
 interface HubData {
@@ -14,6 +14,7 @@ const Hub = () => {
   const [isCohortDropdownOpen, setCohortDropdownOpen] = useState(false);
   const [hub, setHub] = useState<HubData | null>(null); // Specify the type of 'hub'
   const [cohorts, setCohorts] = useState<any[]>([]); // Adjust the type as needed
+  const [configs, setConfigs] = useState<any[]>([]); // Adjust the type as needed
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,8 +22,9 @@ const Hub = () => {
         const data = await getAllPages();
         const info = await getAllCohorts();
         setCohorts(info);
-        // console.log("Cohorts are: ", info);
-        
+      
+        const config = await getAllConfigs();
+        setConfigs(config);
         if (data && data.length > 0) {
           setHub(data[1]); // Fetching the first element of the array
         }
@@ -70,10 +72,6 @@ const Hub = () => {
     }
   };
 
-  const handleDowloadCohortInfo = (url: any) => {
-    window.open(BASE_URL+'/'+url, "_blank");
-  }
-
   return (
     <>
     {hub && (
@@ -111,13 +109,14 @@ const Hub = () => {
       >
         <div>
           <ul className="flex flex-col gap-4">
-            <li className="flex gap-1 items-center text-main-light" onClick={() =>handleDowloadCohortInfo(cohorts[0]?.pdfs[0]?.file)}>
-              <a href="/" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+            <li>
+              <a href={configs.application_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
                 <IoDocumentTextOutline style={{color: 'white'}}/>
-              </a> Application
+                Application
+              </a>
             </li>
             <li className="flex gap-1 items-center text-main-light">
-              <a href="/cohort" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+              <a href="/cohort" className="text-main-dark capitalize hover:text-main-light">
                 <SiGoogleclassroom style={{color: 'white'}}/>
               </a> Cohort
               <span onClick={toggleCohortDropdown} className="cursor-pointer ml-2">
@@ -128,16 +127,20 @@ const Hub = () => {
               <div className="absolute rounded-md top-1/2 mt-2 right-1 bg-main-light w-20">
                 {cohorts.map((cohort, index) => (
                   <ul key={index}>
-                    <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer" onClick={() => handleDowloadCohortInfo(cohort?.pdfs[0]?.file)}>{cohort.title}</li>
+                    <li className="py-1 px-2 hover:bg-gray-100 cursor-pointer" >
+                      <a href={BASE_URL+'/'+cohort?.pdfs[0]?.file} target="_blank" className="text-main-dark capitalize hover:text-main-light">
+                      {cohort.title}
+                      </a>
+                    </li>
                   </ul>
                 ))}
               </div>
             )}
-            <li className="flex gap-1 items-center text-main-light">
-              <a href="/chat" className="text-main-dark capitalize hover:text-main hover:font-bold active:text-main">
+            <li>
+              <a href={configs.chat_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
                 <IoChatbubbleOutline style={{color: 'white'}}/>
+                  Let's chat
               </a>
-              Let's chat
             </li>
           </ul>
         </div>
