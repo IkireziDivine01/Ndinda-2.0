@@ -53,7 +53,7 @@ const Design = () => {
 
     return (
         <div className='dark:bg-main-light'>
-            <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+            <div className='w-full absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
                 <div className="flex justify-between items-center px-2 bg-gray-100">
                     <div>
                         <a href="/">
@@ -68,7 +68,7 @@ const Design = () => {
                                     <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
                                     <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li>
                                     <li><a href="/hub" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li>
-                                    <li><a href="/aboutUs" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
+                                    <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
                                 </ul>
                             )}
                         </nav>
@@ -76,7 +76,7 @@ const Design = () => {
                 </div>
             </div>
         
-            <div className='w-12/12 absolute top-16 pb-16 left-1/3 pt-10'>
+            <div className='w-12/12 absolute top-16 pb-16 left-0 pt-10 sm:left-1/3 md:left-1/3'>
                 <ul className='flex gap-10'>
                     <li><a onClick={() => handleCategoryClick("All")} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === "All" && "font-bold"}`}>All</a></li>
                     {categories.map((category, index) => (
@@ -85,14 +85,14 @@ const Design = () => {
                 </ul>
             </div>
 
-           <div className="absolute top-1/4 left-0 cards w-full gap-4 pr-4 pl-4">
+           <div className="absolute top-1/4 cards">
     {/* Mapping over projects */}
     {selectedCategory === "All" &&
         projects.map((project, index) => {
             return (
                 <div
                     key={index}
-                    className={`card ${clickedCard === index && "clicked"} red w-auto h-auto pb-2`}
+                    className={`card ${clickedCard === index && "clicked"} red h-auto pb-2`}
                     onClick={() => handleSeeMoreClick(index)}
                     onDoubleClick={() => handleDoubleClick(project.id)}
                 >
@@ -107,6 +107,7 @@ const Design = () => {
                     <p className="tip">{project.title}</p>
                     {showDetails[index] && (
                         <div className='absolute bottom-0 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>
+                            <p className='text-left font-bold pl-2'>{project.title}</p>
                             <p className="second-text">{project.description}</p>
                             <Link to={`/projectInfo/${project.id}`} className="button-13" role="button">See more</Link>
                         </div>

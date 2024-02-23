@@ -42,30 +42,42 @@ const ProjectInfo = () => {
   const imagesRef = useRef<HTMLImageElement[]>([]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const index = imagesRef.current.indexOf(entry.target as HTMLImageElement);
-            setCurrentImage(index + 1);
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = imagesRef.current.indexOf(entry.target as HTMLImageElement);
+          setCurrentImage(index + 1);
+
+          // Check if the current image is the last one
+          if (index === project[0].images.length - 1) {
+            // Display next project
+            if (nextProject) {
+              const nextProjectElement = document.getElementById('nextProject');
+              if (nextProjectElement) {
+                nextProjectElement.classList.add('show');
+              }
+            }
           }
-        });
-      },
-      {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.5,
-      }
-    );
+        }
+      });
+    },
+    {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    }
+  );
 
-    imagesRef.current.forEach((img) => {
-      observer.observe(img);
-    });
+  imagesRef.current.forEach((img) => {
+    observer.observe(img);
+  });
 
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  return () => {
+    observer.disconnect();
+  };
+}, [project, nextProject]);
+
 
   const handleNextProjectClick = () => {
     if (nextProjectId) {
@@ -91,7 +103,8 @@ const ProjectInfo = () => {
                     <ul className="flex gap-10">
                       <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
                       <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li>
-                      <li><a href="/hub" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Hub</a></li>
+                      <li><a href="/hub" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li>
+                      <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
                     </ul>
                   )}
                 </nav>
@@ -116,7 +129,7 @@ const ProjectInfo = () => {
                {currentImage === (project[0].images?.length || 0) && nextProject ? (
       <p className='flex flex-col'>
         <span className='text-xs font-bold'>Next project</span>
-        <span className='text-sm italic underline bottom-0 absolute' onClick={handleNextProjectClick}>{nextProject.title}</span>
+        <span id="nextProject" className='text-sm italic underline bottom-0 absolute cursor-pointer ' onClick={handleNextProjectClick}>{nextProject.title}</span>
       </p>
     ) : (
       <div>

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './styles/LandingPage.css';
 import Loader from '../components/loader';
 import Header from '../components/header';
-import { BASE_URL, getAllPages } from '../services';
+import { BASE_URL,  getAllPages } from '../services';
 
 const LandingPage = () => {
   const videoRef = useRef<HTMLVideoElement>(null); // Specify type for videoRef
@@ -12,9 +12,7 @@ const LandingPage = () => {
   useEffect(() => {
     setTimeout(() => setIsLoading(false), 5000);
     const fetchData = async () => {
-      try {
-        // const data = await getAllConfigs();
-        // setConfigs(data); // Unused variable
+      try { 
         const home = await getAllPages();
         // console.log('home:', home);
         
@@ -28,8 +26,6 @@ const LandingPage = () => {
 
     fetchData();
   }, []);
-
-  // console.log('landing:', landing);
 
   if (isLoading) {
     return <Loader />;
@@ -65,7 +61,7 @@ const LandingPage = () => {
           <div>
             <video
               ref={videoRef}
-              className="w-full h-2/3"
+              className="w-full h-screen object-cover"
               loop
               autoPlay
               playsInline

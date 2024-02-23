@@ -9,12 +9,18 @@ interface HubData {
   // Define other properties if needed
 }
 
+interface ConfigData {
+  application_url: string;
+  chat_url: string;
+
+}
+
 const Hub = () => {
   // const [isOpen, setIsOpen] = useState(false);
   const [isCohortDropdownOpen, setCohortDropdownOpen] = useState(false);
   const [hub, setHub] = useState<HubData | null>(null); // Specify the type of 'hub'
   const [cohorts, setCohorts] = useState<any[]>([]); // Adjust the type as needed
-  const [configs, setConfigs] = useState<any[]>([]); // Adjust the type as needed
+  const [configs, setConfigs] = useState<ConfigData | null>(null) // Adjust the type as needed
 
   useEffect(() => {
     const fetchData = async () => {
@@ -110,7 +116,7 @@ const Hub = () => {
         <div>
           <ul className="flex flex-col gap-4">
             <li>
-              <a href={configs.application_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
+              <a href={configs?.application_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
                 <IoDocumentTextOutline style={{color: 'white'}}/>
                 Application
               </a>
@@ -137,7 +143,7 @@ const Hub = () => {
               </div>
             )}
             <li>
-              <a href={configs.chat_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
+              <a href={configs?.chat_url} target="_blank" className="flex gap-1 items-center text-main-light capitalize hover:text-main-light">
                 <IoChatbubbleOutline style={{color: 'white'}}/>
                   Let's chat
               </a>

@@ -1,26 +1,40 @@
-import {useState} from "react";
-import logo from "../assets/logo.png";
+import {useEffect, useState} from "react";
+// import logo from "../assets/logo.png";
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { getAllConfigs, BASE_URL } from "../services";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isProjectsDropdownOpen, setProjectsDropdownOpen] = useState(false);
+  const [configs, setConfigs] = useState<any>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
     //  setProjectsDropdownOpen(false);
   };
 
-  // const toggleProjectsDropdown = () => {
-  //   setProjectsDropdownOpen(!isProjectsDropdownOpen);
-  // };
+   useEffect(() => {
+    const fetchData = async () => {
+      try { 
+        const data = await getAllConfigs();
+        setConfigs(data);
+        console.log("Data fetched:", data.favicon);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <div className="flex justify-between items-center px-2  bg-gray-100"> 
       <div>
+        {configs&&(
         <a href="/">
-          <img src={logo} alt="logo" className="w-16 h-12" />
+          <img src={BASE_URL+ '/' +configs?.favicon} alt="logo" className="w-16 h-12" />
         </a>
+        )}
       </div>
       <div className="pr-2 flex gap-10">
         <nav className="relative">
