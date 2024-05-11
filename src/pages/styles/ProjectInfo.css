@@ -1,7 +1,3 @@
-
-*{
-    font-family: 'TheSans ExtraLight', sans-serif;
-}
 .image-scrolling-page {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -39,7 +35,11 @@ img {
 } */
 
 .image-scroll{
+    height: 60%;
     flex: 4;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
 }
 
 .image-scroll::-webkit-scrollbar {

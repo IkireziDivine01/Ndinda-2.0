@@ -1,25 +1,45 @@
-.grid>*:active~* {
-    filter: grayscale(100%);
+/* Global styles */
+.grid > *:active ~ * {
+  filter: grayscale(100%);
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns:auto auto auto;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  transition: grid-template-columns 3s ease-in-out;
+}
+
+.grid-item {
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  transition: transform 3s ease-in-out;
+}
+
+/* Cards container */
 .cards {
   display: grid;
-  grid-template-columns: auto auto auto auto ;
-  margin: 0;
-  padding: 0;
+  grid-template-columns: auto;
+  justify-content: center;
+  align-items: center;
   column-gap: 15px;
   right: 20%;
   left: 20%;
-  row-gap: 40px;
+  row-gap: 60px;
 }
 
+/* Individual card styles */
 .cards .card {
+  position: relative;
   text-align: center;
   color: #000;
   cursor: pointer;
   transition: 400ms;
-  width: 200px;
-  height: 200px;
+  width: 400px;
+  height: 100%;
 }
 
 .cards .card.clicked {
@@ -27,128 +47,62 @@
   height: auto;
 }
 
-.cards .card {
-  transition: filter 0.3s ease;
-}
-
-.cards .card:not(.clicked) {
-  filter: blur(2px);
-}
-
-/* .cards .card.show-details {
-  filter: blur(0); 
-} */
-
-
 .cards .card p.tip {
   font-size: 1em;
   font-weight: 700;
   text-align: left;
-  padding: 10px;
 }
 
-.cards .card p.second-text {
-  font-size: .7em;
-  text-align: justify;
-  padding: 10px;
-  visibility: hidden;
-  max-height: calc(4 * 1em);
-  overflow: hidden;
-}
-
-.cards .card.clicked p.second-text {
+.cards .card:hover .button-13 {
   visibility: visible;
 }
 
-.cards .card.clicked .button-13 {
-  visibility: visible;
-}
-/*
-.cards .red .blue .green {
-  background-color: #fff;
-}
-
-.cards .card {
+/* Details container within each card */
+.cards .card .details {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
-  flex-direction: column;
-  text-align: center;
-  color: #000;
-  cursor: pointer;
-  transition: 400ms;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.cards .card p.tip {
-  font-size: 1em;
-  font-weight: 700;
-  text-align: left;
-  padding: 10px;
+.cards .card:hover .details {
+  opacity: 1;
 }
 
-.cards .card p.second-text {
-  font-size: .7em;
-  text-align: justify;
-  padding: 10px;
-  visibility: hidden;
-}
-
-.cards .card.clicked {
-  transform: scale(1.1, 1.1);
-  height: 10em;
-}
-
-.cards .card.clicked p.second-text {
-  visibility: visible;
-}
-
-.cards .card:not(.clicked) {
-  filter: blur(10px);
-  transform: scale(0.9, 0.9);
-}
-*/
-
- .button-13 {
-  background-color: #fff;
-  border: 1px solid #A56D47;
-  border-radius: 8px;
-  /* box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0; */
-  box-sizing: border-box;
-  color: #A56D47;
+/* See more button */
+.button-13 {
+  background-color: transparent; /* Make button background transparent */
+  border: none; /* Remove border */
+  color: #fff;
   font-weight: 700;
   cursor: pointer;
-  display: inline-block;
-  font-family: "Amazon Ember", sans-serif;
+  font-family: "Monsterrat", sans-serif;
   font-size: 13px;
   line-height: 29px;
-  margin-left: 10px;
-  padding: 0 10px 0 11px;
-  position: relative;
-  text-align: center;
   text-decoration: none;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-  vertical-align: middle;
-  width: 100px;
   visibility: hidden;
-} 
-
-
+  position: relative;
+  /* top: 40%; */
+}
 
 .button-13:hover {
-  background-color: #A56D47;
   color: #fff;
 }
 
-
-
-.button-13:focus {
+/* .button-13:focus {
   border-color: #008296;
   box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
   outline: 0;
-}
-
-/* .cards .card:hover .button-13{
-  visibility: visible;
 } */
 
 /* Media query for mobile */
@@ -156,17 +110,23 @@
   .cards {
     grid-template-columns: auto;
     row-gap: 40px;
-    left: 5%;
-    right: 5%;
+    left: 4%;
+    right: 4%;
   }
-
-  
+  .cards .card{
+    width: 100%;
+  height: 100%;
+  }
+  /* .grid-container {
+    grid-template-columns:auto;
+  } */
 }
 
-/* Media query for tablet */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .cards {
-    grid-template-columns: auto auto;
-    row-gap: 30px;
-  }
+/* Transition effect */
+.transition-effect {
+  transition: transform 0.3s ease-in-out;
+}
+
+.transition-effect:hover {
+  transform: scale(1.05);
 }

@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-// import logo from "../assets/logo.png";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { getAllConfigs, BASE_URL } from "../services";
 
@@ -17,7 +16,7 @@ export default function Header() {
       try { 
         const data = await getAllConfigs();
         setConfigs(data);
-        console.log("Data fetched:", data.favicon);
+        // console.log("Data fetched:", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -32,7 +31,7 @@ export default function Header() {
       <div>
         {configs&&(
         <a href="/">
-          <img src={BASE_URL+ '/' +configs?.favicon} alt="logo" className="w-16 h-12" />
+          <img src={BASE_URL+ '/' +configs?.logo} alt="logo" className="w-16 h-12" />
         </a>
         )}
       </div>
@@ -40,12 +39,12 @@ export default function Header() {
         <nav className="relative">
           {isOpen ? <FaTimes style={{color:'white'}} className="absolute -right-5 text-2xl mr-4" onClick={toggleMenu} /> : <FaBars onClick={toggleMenu} style={{color:'white'}} />}
           {isOpen && (
-            <ul className="flex gap-10 flex-col sm:flex-row">  
-              <li><a href="/design" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
-              <li><a href="/construction" className="text-main-light text-xs uppercase hover:text-main hover:font-bold active:text-main">Construction</a></li>
-              <li><a href="/hub" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li>
+            <ul className="flex gap-10 flex-row">  
+             <li><a href="/aboutUs" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main">We</a></li>
+              <li><a href="/design" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Design</a></li>
+              {/* <li><a href="/construction" className="text-main-light text-xs uppercase hover:text-main hover:font-bold active:text-main">Construction</a></li> */}
+              {/* <li><a href="/hub" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li> */}
               {/* <li><a href="/contactUs" className="text-main-light uppercase hover:text-main hover:font-bold active:text-main">Premium</a></li> */}
-              <li><a href="/aboutUs" className="text-main-light uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
             </ul>
           )}
         </nav>

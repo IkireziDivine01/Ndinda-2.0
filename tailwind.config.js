@@ -7,6 +7,7 @@ export default {
       'main': '#A56D47',
       'main-light': '#fff',
       'main-dark': '#414042',
+      'grey': '#808080',
     },
   },
   plugins: [],

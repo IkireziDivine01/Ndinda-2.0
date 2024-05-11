@@ -10,8 +10,8 @@ const Design = () => {
     const [categories, setCategories] = useState<any[]>([]); // Adjust the type as needed
     const [projects, setProjects] = useState<any[]>([]); // Adjust the type as needed
     const [selectedCategory, setSelectedCategory] = useState("All");
-    const [showDetails, setShowDetails] = useState(Array(12).fill(false));
-    const [clickedCard, setClickedCard] = useState<null | number>(null);
+    // const [showDetails, setShowDetails] = useState(Array(12).fill(false));
+    const [hoveredCard, setHoveredCard] = useState<null | number>(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,20 +28,14 @@ const Design = () => {
         fetchData();
     }, []);
 
-    // console.log("categories are: ",categories);
-
     const toggleMenu = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleSeeMoreClick = (cardIndex: number) => {
-        setShowDetails((prevDetails) => {
-            const updatedDetails = [...prevDetails];
-            updatedDetails[cardIndex] = !updatedDetails[cardIndex];
-            return updatedDetails;
-        });
-        setClickedCard(cardIndex);
+    const handleSeeMoreHover = (cardIndex: number) => {
+        setHoveredCard(cardIndex);
     };
+    handleSeeMoreHover
 
     const handleDoubleClick = (projectId: number) => {
         window.location.href = `/projectInfo/${projectId}`;
@@ -51,9 +45,44 @@ const Design = () => {
         setSelectedCategory(category);
     };
 
+     useEffect(() => {
+        const gridContainer = document.getElementById('gridContainer');
+        if (gridContainer) {
+            const gridItems = Array.from(document.querySelectorAll('.grid-item'));
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY || window.pageYOffset;
+                const viewportHeight = window.innerHeight;
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+                gridItems.forEach((item) => {
+                    const rect = item.getBoundingClientRect();
+                    const isVisible = rect.top < viewportHeight && rect.bottom >= 0;
+                    if(isVisible){
+                        console.log("");
+                    }
+                });
+
+                if (scrollY > 0) {
+                    gridContainer.style.gridTemplateColumns = 'auto';
+                } else if(isMobile){
+                    gridContainer.style.gridTemplateColumns = 'auto';
+                }else {
+                    gridContainer.style.gridTemplateColumns = 'auto auto auto';
+                }
+            });
+        }
+    }, []);
+
     return (
         <div className='dark:bg-main-light'>
-            <div className='w-full absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+           <div  style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '8%',
+            }} className='z-10'>
+           <div className='w-full bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
                 <div className="flex justify-between items-center px-2 bg-gray-100">
                     <div>
                         <a href="/">
@@ -65,18 +94,19 @@ const Design = () => {
                             {isOpen ? <FaTimes className="absolute -right-5 text-2xl mr-4" onClick={toggleMenu} /> : <FaBars onClick={toggleMenu} />}
                             {isOpen && (
                                 <ul className="flex gap-10">
-                                    <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Design</a></li>
-                                    <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li>
-                                    <li><a href="/hub" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li>
-                                    <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Us</a></li>
+                                    <li><a href="/aboutUs" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">We</a></li>
+                                    <li><a href="/design" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main pr-14">Design</a></li>
+                                    {/* <li><a href="/construction" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Construction</a></li> */}
+                                    {/* <li><a href="/hub" className="text-main-dark uppercase text-xs hover:text-main hover:font-bold active:text-main">Hub</a></li> */}
                                 </ul>
                             )}
                         </nav>
                     </div>
                 </div>
             </div>
-        
-            <div className='w-12/12 absolute top-16 pb-16 left-0 pt-10 sm:left-1/3 md:left-1/3'>
+           </div>
+         
+            <div className='w-12/12 absolute lg:top-24 md:top-10 top-20 left-0 sm:left-1/3 md:left-1/3'>
                 <ul className='flex gap-10'>
                     <li><a onClick={() => handleCategoryClick("All")} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === "All" && "font-bold"}`}>All</a></li>
                     {categories.map((category, index) => (
@@ -85,15 +115,14 @@ const Design = () => {
                 </ul>
             </div>
 
-           <div className="absolute top-1/4 cards">
+           <div className="absolute lg:top-36 md:top-28 top-32 cards grid-container" id="gridContainer">
     {/* Mapping over projects */}
     {selectedCategory === "All" &&
         projects.map((project, index) => {
             return (
                 <div
                     key={index}
-                    className={`card ${clickedCard === index && "clicked"} red h-auto pb-2`}
-                    onClick={() => handleSeeMoreClick(index)}
+                    className={`card ${hoveredCard === index && "hovered"} red w-auto h-auto dark-overlay grid-item`}
                     onDoubleClick={() => handleDoubleClick(project.id)}
                 >
                     {project.images?.length > 0 && (
@@ -101,17 +130,15 @@ const Design = () => {
                             key={project.images[0].id}
                             src={BASE_URL + '/' + project.images[0].image}
                             alt={`image${index}`}
-                            className="w-full h-48 object-cover object-center"
+                            className="w-full h-full object-cover object-center"
                         />
                     )}
-                    <p className="tip">{project.title}</p>
-                    {showDetails[index] && (
-                        <div className='absolute bottom-0 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>
-                            <p className='text-left font-bold pl-2'>{project.title}</p>
-                            <p className="second-text">{project.description}</p>
-                            <Link to={`/projectInfo/${project.id}`} className="button-13" role="button">See more</Link>
-                        </div>
-                    )}
+                    <p className="tip">{project.title}
+                    <span className='block text-left text-xs italic font-normal uppercase text-grey'>{project.location}</span>
+                    </p>
+                    <div className={`details ${hoveredCard === index && "visible"}`}>
+                        <Link to={`/projectInfo/${project.id}`} className="button-13 transition-effect" role="button">See more</Link>
+                    </div>
                 </div>
             );
         })
@@ -124,8 +151,7 @@ const Design = () => {
                 return category.projects.map((project:any, index:any) => (
                     <div
                         key={index}
-                        className={`card ${clickedCard === index && "clicked"} red w-auto h-auto pb-2`}
-                        onClick={() => handleSeeMoreClick(index)}
+                        className={`card ${hoveredCard === index && "hovered"} red w-auto h-auto dark-overlay grid-item`}
                         onDoubleClick={() => handleDoubleClick(project.id)}
                     >
                         {project.images?.length > 0 && (
@@ -133,16 +159,15 @@ const Design = () => {
                                 key={project.images[0].id}
                                 src={BASE_URL + '/' + project.images[0].image}
                                 alt={`image${index}`}
-                                className="w-full h-48 object-cover object-center"
+                                className="w-full h-full object-cover object-center"
                             />
                         )}
-                        <p className="tip">{project.title}</p>
-                        {showDetails[index] && (
-                            <div className='absolute bottom-0 left-0 bg-main-light p-2 drop-shadow-md h-auto w-full z-'>
-                                <p className="second-text">{project.description}</p>
-                                <Link to={`/projectInfo/${project.id}`} className="button-13" role="button">See more</Link>
-                            </div>
-                        )}
+                        <p className="tip">{project.title}
+                    <span className='block text-left text-xs italic font-normal uppercase'>{project.location}</span>
+                    </p>
+                        <div className={`details ${hoveredCard === index && "visible"}`}>
+                            <Link to={`/projectInfo/${project.id}`} className="button-13" role="button">See more</Link>
+                        </div>
                     </div>
                 ));
             }

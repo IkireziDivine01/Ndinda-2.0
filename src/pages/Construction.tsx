@@ -63,7 +63,7 @@ const Construction = () => {
         <div className='absolute top-0 left-0 w-full'>
           <video
             ref={videoRef}
-            className="w-full h-2/3"
+            className="w-full h-screen object-cover"
             loop
             autoPlay
             playsInline
@@ -91,6 +91,7 @@ const Construction = () => {
               alignItems: 'center',
               borderRadius: '10%',
             }}
+            className='left-10 sm:left-0'
           >
             <div onClick={handleChat}>
               <ul className="flex flex-col">

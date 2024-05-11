@@ -84,7 +84,7 @@ const Hub = () => {
     <div className="absolute top-0 left-0 w-full">
        <video
         ref={videoRef}
-        className="w-full h-2/3"
+        className="w-full h-screen object-cover"
         loop
         autoPlay
         playsInline
