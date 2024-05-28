@@ -1,3 +1,13 @@
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+
+* {
+  font-family: Open Sans;
+}
+.head2{
+  background-color:rgba(255,255,255,.4);
+}
+
 .image-scrolling-page {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -35,13 +45,103 @@ img {
 } */
 
 .image-scroll{
-    height: 60%;
+    height: 100%;
     flex: 4;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     overflow: auto;
+    margin-bottom: -10px;
 }
 
 .image-scroll::-webkit-scrollbar {
     display: none;
+}
+
+/* .desc{
+overflow-y: auto;
+} */
+/* Added by Later*/
+.one-project-image{
+    margin-bottom:5px;
+}
+.next-button {
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+    border: 0px;
+    color: #fff;
+    background-color: #A56D47;
+    padding: 10px;
+    box-shadow: 0 0 1px #ccc;
+    transition-duration: 0.5s;
+    transform-origin: 50% 50%;
+    transition-timing-function: ease-out;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+ }
+ 
+
+
+
+.fade-in {
+    animation: fadeIn 1.1s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+
+  .opac {
+    animation: opacity .7s forwards;
+  }
+  
+  @keyframes opacity {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+
+
+  /* .opac {
+    animation: fadeIn 1.3s forwards;
+  }
+  
+  @keyframes opac {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  } */
+  
+    
+@media only screen and (max-width: 768px) {
+    .next-button{
+       font-size:small;
+       position: relative;
+       margin-bottom: 10px;
+       height: auto;
+    } 
+    .next-text{
+        font-size: large;
+        position: relative;
+        bottom: 10px;
+        text-align: center;
+    }
+    .footer-content{
+       margin-left: 20px;
+    }
 }

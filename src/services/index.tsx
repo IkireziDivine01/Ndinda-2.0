@@ -47,4 +47,22 @@ export const getAllCohortsById = async (id:string) =>{
   return res.data;
 }
 
+
+
+export const getSomeProjects = async () => {
+  try {
+    const res = await ndinda_instance.get('/api/projects');
+    const allProjects = res.data;
+    const excludedIndices = [52, 51, 50, 49];
+    // Filter out the projects with the specified indices
+    const filteredProjects = allProjects.filter((_: any, id: number) => !excludedIndices.includes(id));
+
+    return filteredProjects.reverse();
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+    throw error; // Rethrow the error after logging it
+  }
+};
+
+
 export default ndinda_instance

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import './styles/LandingPage.css';
 import Loader from '../components/loader';
 import Header from '../components/header';
+import Footer from '../components/Footer'; // Import the Footer component
 import { BASE_URL,  getAllPages } from '../services';
 
 const LandingPage = () => {
@@ -57,7 +58,7 @@ const LandingPage = () => {
   return (
     <>
       {landing && (
-        <div className="landing absolute top-0 left-0 w-full">
+        <div className="landing absolute top-0 left-0 w-full overflow-hidden">
           <div>
             <video
               ref={videoRef}
@@ -74,13 +75,16 @@ const LandingPage = () => {
               Your browser does not support the video tag.
             </video>
           </div>
-          <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+          <div className='w-12/12 absolute top-0 left-0 right-0 bg-opacity-20 shadow-md backdrop-blur-sm p-2' style={{position:'fixed',backgroundColor:'rgba(255,255,255,.4)'}}>
             <Header />
           </div>
+          <Footer /> {/* Add Footer component here */}
         </div>
       )}
+      
     </>
   );
 }
+
 
 export default LandingPage;

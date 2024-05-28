@@ -4,6 +4,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import './styles/Design.css';
 import { Link } from 'react-router-dom';
 import { getAllProjects, getAllCategories, BASE_URL } from '../services';
+import SmallFooter from '../components/FooterInfo';
 
 const Design = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,8 @@ const Design = () => {
     const [selectedCategory, setSelectedCategory] = useState("All");
     // const [showDetails, setShowDetails] = useState(Array(12).fill(false));
     const [hoveredCard, setHoveredCard] = useState<null | number>(null);
+    const [isProjectsLoaded, setIsProjectsLoaded] = useState(false); // Track loading state
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -20,6 +23,8 @@ const Design = () => {
                 setCategories(cat);
                 const data = await getAllProjects();
                 setProjects(data);
+                setIsProjectsLoaded(true); // Set loading state to true after projects are loaded
+       
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -45,36 +50,41 @@ const Design = () => {
         setSelectedCategory(category);
     };
 
-     useEffect(() => {
-        const gridContainer = document.getElementById('gridContainer');
-        if (gridContainer) {
-            const gridItems = Array.from(document.querySelectorAll('.grid-item'));
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY || window.pageYOffset;
-                const viewportHeight = window.innerHeight;
-                const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    //  useEffect(() => {
+    //     const gridContainer = document.getElementById('gridContainer');
+    //     const onecard=document.getElementById('onecard');
+    //     if (gridContainer) {
+    //         const gridItems = Array.from(document.querySelectorAll('.grid-item'));
+    //         window.addEventListener('scroll', () => {
+    //             const scrollY = window.scrollY || window.pageYOffset;
+    //             const viewportHeight = window.innerHeight;
+    //             const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
-                gridItems.forEach((item) => {
-                    const rect = item.getBoundingClientRect();
-                    const isVisible = rect.top < viewportHeight && rect.bottom >= 0;
-                    if(isVisible){
-                        console.log("");
-                    }
-                });
+    //             gridItems.forEach((item) => {
+    //                 const rect = item.getBoundingClientRect();
+    //                 const isVisible = rect.top < viewportHeight && rect.bottom >= 0;
+    //                 if(isVisible){
+    //                     console.log("");
+    //                 }
+    //             });
 
-                if (scrollY > 0) {
-                    gridContainer.style.gridTemplateColumns = 'auto';
-                } else if(isMobile){
-                    gridContainer.style.gridTemplateColumns = 'auto';
-                }else {
-                    gridContainer.style.gridTemplateColumns = 'auto auto auto';
-                }
-            });
-        }
-    }, []);
+    //             if (scrollY > 0) {
+    //                 gridContainer.style.gridTemplateColumns = 'auto';
+    //                 onecard?.classList.add("fade");
+    //             } else if(isMobile){
+    //                 gridContainer.style.gridTemplateColumns = 'auto';
+    //                 onecard?.classList.add("fade");
+    //             }else {
+    //                 gridContainer.style.gridTemplateColumns = 'auto auto auto';
+    //                 onecard?.classList.remove("fade");
+    //             }
+    //         });
+    //     }
+    // }, []);
 
     return (
-        <div className='dark:bg-main-light'>
+        <div className='ark:bg-main-light mx-auto w-full'>
+  
            <div  style={{
               position: 'fixed',
               top: 0,
@@ -82,7 +92,7 @@ const Design = () => {
               width: '100%',
               height: '8%',
             }} className='z-10'>
-           <div className='w-full bg-opacity-20 shadow-md backdrop-blur-sm p-2'>
+           <div className='w-full bg-opacity-20 shadow-md backdrop-blur-sm p-2 head'>
                 <div className="flex justify-between items-center px-2 bg-gray-100">
                     <div>
                         <a href="/">
@@ -106,22 +116,23 @@ const Design = () => {
             </div>
            </div>
          
-            <div className='w-12/12 absolute lg:top-24 md:top-10 top-20 left-0 sm:left-1/3 md:left-1/3'>
+            <div className='w-12/12 absolute lg:top-24 md:top-10 top-20 left-0 sm:left-1/3 md:left-1/3 nav-2 mx-auto'>
                 <ul className='flex gap-10'>
-                    <li><a onClick={() => handleCategoryClick("All")} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === "All" && "font-bold"}`}>All</a></li>
+                    <li><a onClick={() => handleCategoryClick("All")} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === "All" && "font-bold"}`} style={{cursor:'pointer'}}>All</a></li>
                     {categories.map((category, index) => (
-                        <li key={index}><a onClick={() => handleCategoryClick(category.title)} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === category.title && "font-bold"}`}>{category.title}</a></li>
+                        <li key={index}><a onClick={() => handleCategoryClick(category.title)} className={`text-main-dark capitalize hover:text-main hover:font-bold active:text-main ${selectedCategory === category.title && "font-bold"}`} style={{cursor:'pointer'}}>{category.title}</a></li>
                     ))}
                 </ul>
             </div>
 
-           <div className="absolute lg:top-36 md:top-28 top-32 cards grid-container" id="gridContainer">
+           <div className="relative lg:top-36 md:top-28 top-32 cards grid-container" id="gridContainer" style={{paddingBottom:'260px'}}>
     {/* Mapping over projects */}
     {selectedCategory === "All" &&
         projects.map((project, index) => {
             return (
                 <div
                     key={index}
+                    id='onecard'
                     className={`card ${hoveredCard === index && "hovered"} red w-auto h-auto dark-overlay grid-item`}
                     onDoubleClick={() => handleDoubleClick(project.id)}
                 >
@@ -136,9 +147,11 @@ const Design = () => {
                     <p className="tip">{project.title}
                     <span className='block text-left text-xs italic font-normal uppercase text-grey'>{project.location}</span>
                     </p>
-                    <div className={`details ${hoveredCard === index && "visible"}`}>
-                        <Link to={`/projectInfo/${project.id}`} className="button-13 transition-effect" role="button">See more</Link>
-                    </div>
+
+                    <Link to={`/projectInfo/${project.id}`} /*className="button-13 transition-effect" role="button"*/ >
+                    <div className={`details ${hoveredCard === index && "visible"}`} style={{ }}></div>
+                 </Link>
+
                 </div>
             );
         })
@@ -151,6 +164,7 @@ const Design = () => {
                 return category.projects.map((project:any, index:any) => (
                     <div
                         key={index}
+                        
                         className={`card ${hoveredCard === index && "hovered"} red w-auto h-auto dark-overlay grid-item`}
                         onDoubleClick={() => handleDoubleClick(project.id)}
                     >
@@ -162,12 +176,12 @@ const Design = () => {
                                 className="w-full h-full object-cover object-center"
                             />
                         )}
-                        <p className="tip">{project.title}
+                    <p className="tip">{project.title}
                     <span className='block text-left text-xs italic font-normal uppercase'>{project.location}</span>
                     </p>
-                        <div className={`details ${hoveredCard === index && "visible"}`}>
-                            <Link to={`/projectInfo/${project.id}`} className="button-13" role="button">See more</Link>
-                        </div>
+                    <Link to={`/projectInfo/${project.id}`} /*className="button-13 transition-effect" role="button"*/ >
+                    <div className={`details ${hoveredCard === index && "visible"}`} style={{ }}></div>
+                 </Link>
                     </div>
                 ));
             }
@@ -175,9 +189,14 @@ const Design = () => {
         })
     }
 </div>
+{isProjectsLoaded && (
+    <SmallFooter />
+)}
 
-        </div>
+</div>
     )
 }
-
 export default Design;
+
+
+  

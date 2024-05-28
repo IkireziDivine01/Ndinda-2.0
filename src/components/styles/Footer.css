@@ -1,0 +1,212 @@
+/* src/components/Footer.css */
+@import url(https://db.onlinewebfonts.com/c/ce315ebf5f51f3a4c6d72e97fe4b62de?family=Pargrid+LT+Std+Cross);
+body {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.footer {
+    /* background-color:; */
+    position: relative;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-content {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .latest-news {
+    text-align: center;
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+  }
+  
+  .latest-news h4 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: left;
+    margin-left: 5px;
+    margin-top: 10px;
+    font-size: medium;
+    font-weight: bold;
+  }
+  
+  .latest-news {
+    flex: 1 1 100%;
+    text-align: center;
+    margin-bottom: -40px;
+    
+  }
+  
+  .latest-news p {
+    margin-bottom: 10px;
+    text-align: left;
+    margin-right: 30%;
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .news-container {
+    position: relative;
+  }
+  
+  .news-items {
+    display: flex;
+    overflow-x:auto;
+    padding: 10px 0;
+    scroll-behavior: smooth;
+    width: auto;
+  }
+  
+  .news-item {
+    max-width: 300px;
+    margin: 0 10px;
+    flex-shrink: 0;
+    padding: 30px;
+    margin-left: 20px;
+  }
+  
+  .news-item img {
+    width: 100%;
+    max-height: 170px;
+  }
+  
+  .footer-info {
+    display: flex;
+    flex: 1 1 100%;
+    justify-content: space-between;
+    text-align: left;
+    padding-bottom: 20px;
+    background-color: #fff;
+    padding: 13px;
+    margin-top: 40px;
+    padding-left: 40px;
+   }
+  
+  .footer-info-item {
+    flex: 1 1 40%;
+  }
+  .footer-info-item h4{
+  font-weight: bold;
+  opacity: .7;
+  }
+  
+  .footer-info-item h3 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .footer-info-item p {
+    margin: 0;
+  }
+  
+  .footer-social {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .footer-social a {
+    margin: 0 10px;
+  }
+  
+  .footer-social .img-tl {
+    width: 29px;
+    height: 29px;
+  }
+  .footer-social .img-col {
+    filter: grayscale(100%) brightness(0.6);
+    width: 27px;
+    height: 27px;
+  }
+  .footer-social .img-col:hover {
+    filter: grayscale(100%) brightness(0);
+  }
+  
+  /* Customize the scrollbar */
+.news-items::-webkit-scrollbar {
+    height: 8px; /* Adjust the height of the scrollbar */
+    display: none;
+  }
+  
+  .news-items::-webkit-scrollbar-track {
+    background: transparent; /* Make the track transparent */
+  }
+  
+  .news-items::-webkit-scrollbar-thumb {
+    background-color: rgba(131, 124, 124, 0.5); /* Change scrollbar thumb color */
+    border-radius: 4px; /* Round the scrollbar thumb */
+  }
+  
+  .news-items::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(110, 105, 105, 0.7); /* Change color on hover */
+  }
+  .news-item{
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .news-item:hover {
+    /* Zoom in effect */
+    opacity: .5;
+    cursor: pointer;
+  }
+
+  .news-item:hover ~ .latest-news p {
+    opacity: 1;
+  }
+
+.footer-link{
+  color: #A56D47;
+  font-weight: bold;
+}
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .news-item img {
+        width: 70%;
+        height: auto;
+      }
+      .news-item {
+        max-width: 300px;
+        margin: 0 10px;
+        flex-shrink: 0;
+        padding: 0px;
+      } 
+      .news-items{
+        width:100vh;
+      }
+      .news-items::-webkit-scrollbar {
+        height: 8px; /* Adjust the height of the scrollbar */
+        display:block;
+      }
+  }
+  @media (max-width: 600px) {
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    justify-content:center;
+    text-align: left;
+    padding-bottom: 20px;
+    background-color: #fff;
+    padding: 13px;
+    margin-top: 30px;
+    padding-left: 40px;
+  }
+  
+  .footer-info-item {
+    flex: 1 1 40%;
+    padding: 10px;
+  }
+  }
+  
