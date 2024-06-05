@@ -28,7 +28,7 @@ export default function Header() {
 
   return (
     <div className="flex justify-between items-center px-2  bg-gray-100"> 
-      <div>
+      <div className="">
         {configs&&(
         <a href="/">
           <img src={BASE_URL+ '/' +configs?.logo} alt="logo" className="w-16 h-12" />
