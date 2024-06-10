@@ -4,9 +4,7 @@ import "./styles/ProjectInfo.css";
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import { getAllProjectsById, BASE_URL, getAllProjects } from '../services';
-import iNoBounce from 'inobounce';
 import SmallFooter from '../components/FooterInfo';
-
 
 const ProjectInfo = () => {
   const { projectId } = useParams<{ projectId: string }>() || { projectId: undefined };
@@ -16,37 +14,36 @@ const ProjectInfo = () => {
   const [nextProject, setNextProject] = useState<any>(null);
   const [ids, setIds] = useState<number[]>([]);
 
-  console.log(ids)
+  console.log(ids);
+
   const findNextProjectId = (projectId: string | undefined) => {
     if (!projectId || ids.length === 0) return undefined;
 
     for (let i = 0; i < ids.length; i++) {
       if (ids[i] === parseInt(projectId)) {
-        if (i === ids.length) return undefined;
+        if (i === ids.length - 1) return undefined;
         return ids[i + 1];
       }
     }
 
     return undefined; // Project ID not found
-  }
+  };
+
   const nextProjectId = findNextProjectId(projectId);
 
   useEffect(() => {
-    iNoBounce.enable(); // Enable iNoBounce
     const fetchData = async () => {
       try {
-        const projec = await getAllProjects()
+        const projec = await getAllProjects();
         const id = projec.map((item: any) => item.id);
-        setIds(id)
+        setIds(id);
         if (projectId) {
           const data = await getAllProjectsById(projectId);
-          // console.log("Data fetched:", data);
           setProject(data);
 
           if (nextProjectId) {
             const nextProjectData = await getAllProjectsById(nextProjectId.toString());
             setNextProject(nextProjectData[0]);
-            // console.log("Next project:", nextProject || "No next project found");
           }
         }
       } catch (error) {
@@ -73,7 +70,6 @@ const ProjectInfo = () => {
 
             // Check if the current image is the last one
             if (index === project[0].images.length - 1) {
-
               // Display next project
               if (nextProject) {
                 const nextProjectElement = document.getElementById('nextProject');
@@ -98,15 +94,36 @@ const ProjectInfo = () => {
 
     return () => {
       observer.disconnect();
-      iNoBounce.disable(); // Disable iNoBounce when component unmounts
     };
   }, [project, nextProject]);
+
+  // Prevent scroll chaining
+  useEffect(() => {
+    const preventScrollChaining = (e: WheelEvent) => {
+      if (e.target instanceof HTMLElement) {
+        const scrollableElement = e.target.closest('.image-scroll') as HTMLElement;
+        if (scrollableElement) {
+          const isAtTop = scrollableElement.scrollTop === 0;
+          const isAtBottom = scrollableElement.scrollHeight - scrollableElement.scrollTop === scrollableElement.clientHeight;
+          if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+            e.preventDefault();
+          }
+        }
+      }
+    };
+
+    document.addEventListener('wheel', preventScrollChaining, { passive: false });
+
+    return () => {
+      document.removeEventListener('wheel', preventScrollChaining);
+    };
+  }, []);
 
   const handleNextProjectClick = () => {
     if (nextProjectId) {
       window.location.href = `/projectInfo/${nextProjectId}`;
     }
-  }
+  };
 
   return (
     <>
@@ -135,7 +152,7 @@ const ProjectInfo = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 w-screen h-screen overflow-hidden" >
+          <div className="flex flex-col sm:flex-row gap-6 w-screen h-screen overflow-hidden">
             <div className="image-scroll overflow-y-scroll w-full h-full sm:w-10/12">
               {project[0].images?.map((image: any, imgIndex: number) => (
                 <img
@@ -169,9 +186,7 @@ const ProjectInfo = () => {
           </div>
         </div>
       )}
-      {project && (
-      <SmallFooter />
-      )};
+      {project && <SmallFooter />}
     </>
   );
 }
